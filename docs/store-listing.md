@@ -65,7 +65,7 @@ renders no markup. The block below is what `play-metadata.py` uploads, so the ou
    internet permission" only while `aab-permissions.py` forbids `INTERNET`; what it stores.
 4. `WHAT IT CANNOT DO` — the honest limits, and what a phone or the platform can stop.
 5. `PERMISSIONS` — one line each, in the user's words.
-6. A last line pointing at the source: `github.com/maksforge/<repo>`.
+6. A last line pointing at the source: `github.com/maks-sredniawa/<repo>`.
 
 ```
 ```
