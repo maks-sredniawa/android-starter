@@ -63,7 +63,7 @@ close. Whenever `APP_SCHEMA_VERSION` changes, all five hold before the release g
 - [ ] **Capture the screenshots** with `scripts/screenshots.py` from a release-shaped build, in every
       listing language, into `art/play-screenshots/`. Play wants at least two before the first review.
 - [ ] **Put the app on maksforge.com.** Its icon goes at `assets/icons/<repo>.webp` in
-      maksforge/maksforge.github.io, which the app's own site loads, and the app goes on that home
+      maks-sredniawa/maks-sredniawa.github.io, which the app's own site loads, and the app goes on that home
       page. Replace `description` in `docs/_config.yml` too: it is the tagline under the app's name.
 - [ ] **Write the privacy policy** and confirm GitHub Pages is serving `docs/`. Play requires a
       *hosted* URL, and an offline app has no server of its own.

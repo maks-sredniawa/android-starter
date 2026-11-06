@@ -133,7 +133,7 @@ account.">
 
 ## Status
 
-Just bootstrapped from [android-starter](https://github.com/maksforge/android-starter). The release
+Just bootstrapped from [android-starter](https://github.com/maks-sredniawa/android-starter). The release
 pipeline and quality gates are real; the screens are still the template's placeholder app. Nothing
 is on Play yet.
 
@@ -455,7 +455,7 @@ def main() -> int:
         "  docs/optional-modules.md  - delete what the app does not need while deleting is free\n"
         "  scripts/aab-permissions.py - EXPECTED lists the template's permissions; keep it true\n"
         "  scripts/edge-to-edge.py    - SCENES walks the template's screens; rewrite it against yours\n"
-        f"  maksforge/maksforge.github.io - put the icon at assets/icons/{ROOT.name}.webp and add the app\n"
+        f"  maks-sredniawa/maks-sredniawa.github.io - put the icon at assets/icons/{ROOT.name}.webp and add the app\n"
         "  to the home page; docs/_config.yml's description is still a placeholder\n"
         f"  {placeholders}, CLAUDE.md's placeholders"
     )

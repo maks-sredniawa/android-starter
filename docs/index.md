@@ -41,4 +41,4 @@ and backups go to storage you choose. The details are in the
 
 ## The source
 
-Built in the open at **[maksforge/<repo>](https://github.com/maksforge/<repo>)**.
+Built in the open at **[maks-sredniawa/<repo>](https://github.com/maks-sredniawa/<repo>)**.
