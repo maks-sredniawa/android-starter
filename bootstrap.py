@@ -67,7 +67,7 @@ TEMPLATE_APP_ID = "com.example.starter"
 TEMPLATE_NAME = "Starter"
 TEMPLATE_SUPPORT_ADDRESS = "support@example.com"
 
-ORG = "maksforge"
+OWNER = "maks-sredniawa"
 DOMAIN = "maksforge.com"
 SITE = f"https://{DOMAIN}"
 
@@ -384,8 +384,8 @@ def main() -> int:
     doc_replacements = [
         ("<support email>", support),
         (f"{SITE}/<repo>/", f"{SITE}/{repo}/"),
-        (f"{ORG}/<repo>", f"{ORG}/{repo}"),
-        ("<owner>/<repo>", f"{ORG}/{repo}"),
+        (f"{OWNER}/<repo>", f"{OWNER}/{repo}"),
+        ("<owner>/<repo>", f"{OWNER}/{repo}"),
     ]
     for doc in ["index.md", "privacy-policy.md", "store-listing.md", "play-app-content.md", "RELEASING.md"]:
         rewrite(ROOT / "docs" / doc, doc_replacements)
