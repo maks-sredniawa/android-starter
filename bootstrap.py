@@ -15,7 +15,7 @@ What it changes, and nothing else:
   * `LICENSE`                — replaced by a source-available notice (`--licence reserved` for one
                                that grants nothing yet)
   * `release-please-config.json`, `.release-please-manifest.json`, `CHANGELOG.md`
-  * `docs/_config.yml`       — the Pages site title, its icon path, and the in-development status
+  * `docs/_config.yml`       — the site title, its icon path, and the in-development status
   * the support address      — `SupportHandoff.kt`, the site, the privacy policy and the Play docs,
                                `<repo>.support@maksforge.com` unless `--support` says otherwise
   * `docs/*.md`              — `<repo>` in the maksforge.com and GitHub URLs

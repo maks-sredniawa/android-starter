@@ -5,12 +5,12 @@
     python3 scripts/repo-setup.py             # do it
 
 **None of this is inherited.** GitHub's template mechanism copies files and nothing else: no
-rulesets, no branch protection, no secrets, no Pages setting, no merge-strategy preference. A
-repo created from the template starts with `main` wide open and every one of these undone, and
-the build stays green the whole time — the first symptom is a release PR that never appears,
-which reads like a broken template rather than an unconfigured repository.
+rulesets, no branch protection, no secrets, no merge-strategy preference. A repo created from
+the template starts with `main` wide open and every one of these undone, and the build stays
+green the whole time — the first symptom is a release PR that never appears, which reads like a
+broken template rather than an unconfigured repository.
 
-That is why this script exists rather than a paragraph asking you to remember five UI journeys.
+That is why this script exists rather than a paragraph asking you to remember the UI journeys.
 It is idempotent: run it again after any manual change and it reports what is already correct
 instead of fighting you.
 
@@ -165,23 +165,6 @@ def ensure_merge_strategy(repo: str, dry_run: bool) -> None:
     print("  merge strategy set to rebase-only")
 
 
-def ensure_pages(repo: str, dry_run: bool) -> None:
-    """Play requires a *hosted* privacy-policy URL, and an app with no backend has no server of
-    its own. Pages serving docs/ is the cheapest place to put one.
-    """
-    current = api(f"repos/{repo}/pages", check=False)
-    if current is not None:
-        source = json.loads(current).get("source") or {}
-        where = f"{source.get('branch', '?')}{source.get('path', '')}"
-        print(f"  Pages already enabled from {where}")
-        return
-    if dry_run:
-        print("  would enable Pages from main /docs")
-        return
-    api(f"repos/{repo}/pages", "POST", {"source": {"branch": "main", "path": "/docs"}})
-    print("  Pages enabled from main /docs")
-
-
 def report_secrets(repo: str) -> list[str]:
     have = {line.split("\t")[0] for line in gh("secret", "list", "--repo", repo).splitlines() if line}
     blocking = []
@@ -209,8 +192,6 @@ def main() -> int:
     ensure_ruleset(repo, args.dry_run)
     print("merge strategy")
     ensure_merge_strategy(repo, args.dry_run)
-    print("pages")
-    ensure_pages(repo, args.dry_run)
     print("secrets")
     blocking = report_secrets(repo)
 

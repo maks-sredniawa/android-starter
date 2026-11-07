@@ -1,12 +1,12 @@
-# GitHub Pages config for the docs/ folder.
+# Site config for the docs/ folder, which the maksforge.com deploy publishes at maksforge.com/<repo>/.
 #
 # It exists for two reasons: Google Play requires a *hosted* privacy policy URL and the app has no server
-# by design (CLAUDE.md, *On-device storage only*), and Play's listing needs a Website to point at. Pages serves both off the
-# already-public repo for nothing — privacy-policy.md and index.md, the site root.
+# by design (CLAUDE.md, *On-device storage only*), and Play's listing needs a Website to point at. That
+# deploy serves both off the already-public repo for nothing — privacy-policy.md and index.md, the site root.
 #
-# Front matter does NOT decide what is published. GitHub Pages injects default front matter, so *every*
-# .md in this folder renders as a themed, crawlable page — PLAN.html, DOD.html, RELEASING.html and the
-# ADRs are all live and were probed as such on 2026-08-18. An earlier version of this comment claimed a
+# Front matter does NOT decide what is published. The build runs GitHub Pages' Jekyll plugins, which inject
+# default front matter, so *every* .md in this folder renders as a themed, crawlable page — PLAN.html,
+# DOD.html, RELEASING.html and the ADRs are all live and were probed as such on 2026-08-18. An earlier version of this comment claimed a
 # file without `---` was "copied verbatim rather than rendered", and offered that as the reason planning
 # documents were safe to leave in a published directory. That reason was untrue. They are safe, but only
 # because this repo is public and they hold nothing that is not already on GitHub; anything that must not

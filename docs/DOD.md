@@ -65,8 +65,8 @@ close. Whenever `APP_SCHEMA_VERSION` changes, all five hold before the release g
 - [ ] **Put the app on maksforge.com.** Its icon goes at `assets/icons/<repo>.webp` in
       maks-sredniawa/maks-sredniawa.github.io, which the app's own site loads, and the app goes on that home
       page. Replace `description` in `docs/_config.yml` too: it is the tagline under the app's name.
-- [ ] **Write the privacy policy** and confirm GitHub Pages is serving `docs/`. Play requires a
-      *hosted* URL, and an offline app has no server of its own.
+- [ ] **Write the privacy policy** and confirm `maksforge.com/<repo>/privacy-policy.html`
+      serves it. Play requires a *hosted* URL, and an offline app has no server of its own.
 - [ ] **Answer the Console's App content pages and write [`play-app-content.md`](play-app-content.md)
       in the same sitting** — the reasons are in front of you then and gone a week later. It moves in
       the same commit as the privacy policy, every time. Re-read *Target audience* after the content
@@ -78,9 +78,9 @@ close. Whenever `APP_SCHEMA_VERSION` changes, all five hold before the release g
       `local.properties`. Back it up somewhere that is not this machine: losing it means never being
       able to update the app on Play again. Fill in *The upload key* table in `RELEASING.md` the same
       day — the fingerprint is what Play asks you to compare.
-- [ ] **Set up the GitHub repository** — `python3 scripts/repo-setup.py` does the ruleset, the
-      merge setting and Pages; the release-please PAT is the one step it cannot do, and without it
-      no release PR is ever opened. *Setting up a new repository* in [`RELEASING.md`](RELEASING.md).
+- [ ] **Set up the GitHub repository** — `python3 scripts/repo-setup.py` does the ruleset and the
+      merge setting; the release-please PAT is the one step it cannot do, and without it no
+      release PR is ever opened. *Setting up a new repository* in [`RELEASING.md`](RELEASING.md).
       **None of this is inherited from the template** — GitHub copies files, never settings — and
       the build stays green while it is all still undone. **Write the PAT's expiry date into this
       item** the day you create it: when it lapses the release PR simply stops appearing.
