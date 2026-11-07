@@ -6,7 +6,7 @@ title: <App name>
 # <App name>
 
 <!--
-    The site root, served by GitHub Pages from `docs/`. It exists for two reasons: Play's listing
+    The site root, published from `docs/` at maksforge.com/<repo>/. It exists for two reasons: Play's listing
     asks for a Website, and the privacy policy needs a hosted URL. Both come free from a public
     repo — no hosting, no domain, no bill.
 

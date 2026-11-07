@@ -17,7 +17,7 @@ python3 bootstrap.py --name "My App" --namespace app.myapp --appid com.maksforge
 git config core.hooksPath .githooks     # Conventional Commits — release-please depends on it
 ./gradlew assembleDebug test
 rm bootstrap.py
-python3 scripts/repo-setup.py           # ruleset, merge strategy, Pages — none of it is inherited
+python3 scripts/repo-setup.py           # ruleset and merge strategy — none of it is inherited
 ```
 
 `bootstrap.py` also writes **`.claude/settings.json`**: a Claude Code hook that stops Claude's `git push`

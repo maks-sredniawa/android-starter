@@ -183,7 +183,7 @@ captures no audio, so say so in the declaration if the service's job is a sound.
   `SupportHandoff.kt` compiles in. The Console field changes without a release; the app's copy needs
   one.
 - **Privacy policy:** `https://maksforge.com/<repo>/privacy-policy.html`, served from `docs/` by
-  Pages. It updates on a merge to `main`, with no release, which is why it has to be right before the
+  maksforge.com. It updates within about 15 minutes of a merge to `main`, with no release, which is why it has to be right before the
   app it describes ships rather than after.
 
 ## Production access — the application, and the answers it was given
@@ -247,7 +247,7 @@ because the policy text and its enforcement disagree.
   a cut, a project is not a person), but the distinction has to survive a reviewer skimming for
   "external payment link", and a pre-launch rejection costs the closed-test window.
 - **The reach is one level out.** The first app built from this template moved its tip from the app to
-  the repository and the Pages site, then noticed that the listing's *Website* field and the last line
+  the repository and the app's site, then noticed that the listing's *Website* field and the last line
   of its full description point at exactly those pages. So "nothing the app links to" includes what
   the **listing** links to.
 - **When to revisit:** once the app is live, with a track record to appeal from. The cheapest shape

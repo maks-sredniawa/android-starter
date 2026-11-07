@@ -10,7 +10,7 @@ _Last updated: <date>_
 <!--
     **This is a template with real structure, not boilerplate to paste unread.** Play requires a
     *hosted* privacy policy URL and an offline app has no server of its own, which is why this repo
-    carries a `docs/_config.yml` — GitHub Pages serves this file for nothing.
+    carries a `docs/_config.yml` — maksforge.com serves this file for nothing.
 
     The part people get wrong is the last section. An app that stores everything locally still has
     things happening around it that a policy has to be honest about, and Play's Data safety form

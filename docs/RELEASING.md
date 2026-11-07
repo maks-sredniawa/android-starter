@@ -522,9 +522,9 @@ something:
 ## Setting up a new repository (once)
 
 **None of this is inherited.** GitHub's template mechanism copies files and nothing else: no
-rulesets, no branch protection, no secrets, no Pages setting, no merge-strategy preference. A repo
-created from the template starts with `main` wide open and every item below undone — and the build
-stays green throughout, so nothing tells you. The first symptom is a release PR that never appears,
+rulesets, no branch protection, no secrets, no merge-strategy preference. A repo created
+from the template starts with `main` wide open and every item below undone — and the build stays
+green throughout, so nothing tells you. The first symptom is a release PR that never appears,
 which reads like a broken template rather than an unconfigured repository.
 
 Most of it is one command:
@@ -535,11 +535,11 @@ python3 scripts/repo-setup.py             # do it
 ```
 
 It creates the `main: require CI` ruleset with the right check names, sets rebase-only merging,
-enables Pages from `docs/`, and reports which secrets are still missing. It is idempotent — run it
-again after any manual change and it reports what is already correct rather than fighting you. It
-verifies the required check names against `ci.yml` first, because a required check that CI never
-publishes leaves every PR stuck at *"Expected — waiting for status to be reported"* with no way out
-but deleting the ruleset.
+and reports which secrets are still missing. It is idempotent — run it again after any manual
+change and it reports what is already correct rather than fighting you. It verifies the required
+check names against `ci.yml` first, because a required check that CI never publishes leaves every
+PR stuck at *"Expected — waiting for status to be reported"* with no way out but deleting the
+ruleset.
 
 **The one step it cannot do is the token.** GitHub has no API for minting a personal access token,
 so do this by hand, first:
@@ -557,8 +557,12 @@ token`, and no release PR is ever opened.
 What the script sets, and why each one matters, is in the sections above: **rebase-only merging**
 (*Merge pull requests with rebase*), **the `main` ruleset** — no bypass actors, requiring both CI
 contexts, and note how it interacts with the token, since a release PR opened by `GITHUB_TOKEN`
-gets zero CI jobs and this rule then blocks its merge permanently — and **Pages**, because Play
-demands a *hosted* privacy-policy URL and an app with no backend has no server of its own.
+gets zero CI jobs and this rule then blocks its merge permanently.
+
+**The site needs no setting.** The maksforge.com deploy (`maks-sredniawa/maks-sredniawa.github.io`)
+publishes every public repo whose `docs/_config.yml` uses `pages-theme` at `maksforge.com/<repo>/`,
+within about 15 minutes of a change. Play demands a *hosted* privacy-policy URL, and an app with no
+backend has no server of its own.
 
 The **five Play secrets** (table above) are the exception: wanted at the first upload, not before.
 
