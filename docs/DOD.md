@@ -65,7 +65,7 @@ close. Whenever `APP_SCHEMA_VERSION` changes, all five hold before the release g
 - [ ] **Put the app on maksforge.com.** Its icon goes at `assets/icons/<repo>.webp` in
       maks-sredniawa/maks-sredniawa.github.io, which the app's own site loads, and the app goes on that home
       page. Replace `description` in `docs/_config.yml` too: it is the tagline under the app's name.
-- [ ] **Write the privacy policy** and confirm `maksforge.com/<repo>/privacy-policy.html`
+- [ ] **Write the privacy policy** and confirm `maksforge.com/<repo>/privacy-policy`
       serves it. Play requires a *hosted* URL, and an offline app has no server of its own.
 - [ ] **Answer the Console's App content pages and write [`play-app-content.md`](play-app-content.md)
       in the same sitting** — the reasons are in front of you then and gone a week later. It moves in
