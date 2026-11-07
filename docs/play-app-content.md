@@ -182,7 +182,7 @@ captures no audio, so say so in the declaration if the service's job is a sound.
 - **Contact email:** `<support email>`, public on the listing and the same address
   `SupportHandoff.kt` compiles in. The Console field changes without a release; the app's copy needs
   one.
-- **Privacy policy:** `https://maksforge.com/<repo>/privacy-policy.html`, served from `docs/` by
+- **Privacy policy:** `https://maksforge.com/<repo>/privacy-policy`, served from `docs/` by
   maksforge.com. It updates within about 15 minutes of a merge to `main`, with no release, which is why it has to be right before the
   app it describes ships rather than after.
 
