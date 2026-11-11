@@ -15,7 +15,10 @@ What it changes, and nothing else:
   * `LICENSE`                — replaced by a source-available notice (`--licence reserved` for one
                                that grants nothing yet)
   * `release-please-config.json`, `.release-please-manifest.json`, `CHANGELOG.md`
-  * `docs/_config.yml`       — the site title, its icon path, and the in-development status
+  * `docs/_config.yml`       — the site title, its icon path and the in-development status; the
+                               template's `kind:` line is dropped, so the page falls back to its
+                               Play or Chrome kind
+  * `scripts/test_bootstrap.py` — deleted, since it tests this file, which the new app deletes
   * the support address      — `SupportHandoff.kt`, the site, the privacy policy and the Play docs,
                                `<repo>.support@maksforge.com` unless `--support` says otherwise
   * `docs/*.md`              — `<repo>` in the maksforge.com and GitHub URLs
@@ -220,6 +223,15 @@ def rewrite(path: Path, replacements: list[tuple[str, str]]) -> bool:
     return True
 
 
+def site_config_replacements(name: str, repo: str) -> list[tuple[str, str]]:
+    return [
+        ("title: Starter", f"title: {name}"),
+        ("icon: /assets/icons/android-starter.webp", f"icon: /assets/icons/{repo}.webp"),
+        ("status: oss", "status: building"),
+        ("  kind: Template\n", ""),
+    ]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Rename this template into a new app.",
@@ -354,14 +366,8 @@ def main() -> int:
     (ROOT / ".release-please-manifest.json").write_text('{\n  ".": "0.1.0"\n}\n')
     (ROOT / "CHANGELOG.md").write_text(f"# Changelog\n\nNothing released yet.\n")
 
-    rewrite(
-        ROOT / "docs/_config.yml",
-        [
-            ("title: Starter", f"title: {args.name}"),
-            ("icon: /assets/icons/android-starter.webp", f"icon: /assets/icons/{ROOT.name}.webp"),
-            ("status: oss", "status: building"),
-        ],
-    )
+    rewrite(ROOT / "docs/_config.yml", site_config_replacements(args.name, ROOT.name))
+    (ROOT / "scripts/test_bootstrap.py").unlink(missing_ok=True)
 
     owner = subprocess.run(["git", "config", "user.name"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
     (ROOT / "LICENSE").write_text(
