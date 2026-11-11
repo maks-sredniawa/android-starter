@@ -19,3 +19,4 @@ description: <One line about the app>
 maksforge:
   icon: /assets/icons/android-starter.webp
   status: oss
+  kind: Template
