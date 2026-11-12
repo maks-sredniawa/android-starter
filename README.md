@@ -22,9 +22,10 @@ python3 scripts/repo-setup.py           # ruleset and merge strategy — none of
 
 `bootstrap.py` also writes **`.claude/settings.json`**: a Claude Code hook that stops Claude's `git push`
 until the next release's Play notes are written (`scripts/notes-gate.py --pending`). The template ships
-without it on purpose — the template never releases, so the hook would block every push to it — which
-makes installing it a **once-per-repo step**, done by bootstrap. Commit the file, and launch Claude Code
-inside the new repository rather than a parent folder, or the hook never loads.
+without it, which makes installing it a **once-per-repo step**, done by bootstrap. A Claude Code session
+started in an app carries that app's hook, which can still run against the template; `--pending` exits 0
+there, because the template never releases. Commit the file, and launch Claude Code inside the new
+repository rather than a parent folder, or the hook never loads.
 
 `bootstrap.py` also replaces this README and the template's LICENSE — the latter with a notice that
 reserves all rights, because "use it for anything" left on an app's public repository reads as exactly
