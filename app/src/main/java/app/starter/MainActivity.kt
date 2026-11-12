@@ -44,20 +44,10 @@ class MainActivity : AppCompatActivity() {
         // the reasoning and `AppTheme` writes the icon appearance at runtime.
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        // **Nobody pans this window; the content pads itself.**
-        //
-        // The manifest asks for `adjustResize`, and on API 26–29 that is the only thing that works:
-        // `WindowInsets.ime` is not reported before API 30, so the older half of the supported range
-        // depends on the window actually being resized. From API 30 the same request is inert — the
-        // line above sets `decorFitsSystemWindows = false`, and the window manager downgrades the
-        // resize to a *pan*. Panning is worse than doing nothing: with the keyboard open on a long
-        // form it slides the top of the form under the status bar and carries the top app bar, Save
-        // button and all, off the top of the screen.
-        //
-        // So on API 30+ the system is told to do neither, and `Modifier.imePadding()` in
-        // `Navigation.kt` handles the keyboard as the inset it now is. Set here rather than in the
-        // manifest because the manifest cannot say "only on new enough Android", and the old
-        // behaviour is still load-bearing below 30.
+        // Nobody pans this window; `imePadding()` in `Navigation.kt` pads the content. Below API 30
+        // the activity's manifest `adjustResize` is what makes the keyboard arrive as an inset at
+        // all; from 30 it arrives anyway and the system is told to do nothing. Android ignores
+        // `adjustResize` on `<application>`, and below 30 Compose then never sees the keyboard.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
         }

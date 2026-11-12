@@ -90,14 +90,6 @@ fun MainNavigation(modifier: Modifier = Modifier) {
     ) { insets ->
         NavDisplay(
             backStack = backStack,
-            // **The keyboard is an inset like any other, and this Scaffold owns them.**
-            //
-            // `MainActivity` sets `decorFitsSystemWindows = false` for edge-to-edge, which makes the
-            // manifest's `adjustResize` inoperative from API 30 — the window manager downgrades it
-            // to a *pan*. With nothing consuming `WindowInsets.ime`, the system then pans the whole
-            // window to keep the focused field in view, which slides the top of a long form under
-            // the status bar and pushes its top bar — Save included — off the screen entirely.
-            //
             // `consumeWindowInsets` before `imePadding` is what stops it double-counting: the
             // keyboard's inset is measured from the bottom of the *screen*, so it already contains
             // the navigation-bar height that `padding(insets)` just applied. Consuming says "that
