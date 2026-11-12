@@ -76,9 +76,10 @@ SITE = f"https://{DOMAIN}"
 
 # The Claude Code hook that runs `notes-gate.py --pending` before every `git push` Claude makes, so a
 # release's Play notes are written on the branch that brings the change instead of in a docs PR after
-# release-please's PR fails the notes gate. Installed here, not committed to the template, because the
-# template never releases: its own `feat:` commits would make every push to it owe notes for a version
-# that will never ship. An app does release, so it gets the hook the moment it becomes one.
+# release-please's PR fails the notes gate. Installed here, not committed to the template: an app
+# releases, so it gets the hook the moment it becomes one. A session started in an app carries that
+# app's hook and can still run it against the template, where `--pending` exits 0 because the template
+# never releases.
 #
 # It fires on every Bash call — Claude Code ignores an `if:` key here — so `push-notes-hook.py` decides
 # whether the command is a real `git push`, and runs the gate in the checkout that push comes from,

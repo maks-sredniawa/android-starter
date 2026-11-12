@@ -161,7 +161,8 @@ def next_version(current: str, level: int) -> str | None:
 
 
 def pending(base: str) -> int:
-    # The template never releases (release-please.yml skips it); an app made from it deletes bootstrap.py.
+    # Only the template still holds bootstrap.py (an app's owner removes it after running it), and the
+    # template never releases: release-please.yml skips it.
     if (ROOT / "bootstrap.py").exists():
         return 0
     listing = LISTING.relative_to(ROOT).as_posix()

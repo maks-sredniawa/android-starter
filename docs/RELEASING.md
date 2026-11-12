@@ -125,7 +125,8 @@ conventional commits since the last release plus this branch's own, read the way
 them — including the pre-1.0 options in `release-please-config.json`. Replayed against nine releases
 of an app built from this template, it proposed the version release-please actually cut every time.
 It exits **2** when that version has no `### x.y.z` on the branch or on `main`, and 0 when no release
-is pending — a docs-only branch never owes notes.
+is pending — a docs-only branch never owes notes — and in the template itself, which still holds
+`bootstrap.py` and never releases (below).
 
 **Claude Code runs it before every `git push` it makes — once `bootstrap.py` has installed the hook.**
 `.claude/settings.json` gets a `PreToolUse` hook on every Bash call, and `scripts/push-notes-hook.py`
@@ -134,9 +135,10 @@ linked worktree, a `cd`, or a `git -C`. Exit 2 blocks the push and hands Claude 
 notes are written on the branch before it leaves; any other failure only warns, because a broken
 check must not stop every push — and so does a push whose checkout it cannot find. It fetches
 `origin/main` first, since a stale `main` would miss a `feat:` merged elsewhere.
-⚠ **The template carries no hook, on purpose, and that is why it is a per-repo step.** The template
-never releases (below), so its own `feat:` commits would make every push to it owe notes for a version
-that will never ship. `bootstrap.py` writes the hook as part of turning the template into an app.
+⚠ **The template carries no hook, and that is why it is a per-repo step.** `bootstrap.py` writes the
+hook as part of turning the template into an app. A Claude Code session started in an app carries that
+app's hook and runs the gate of whichever checkout it pushes, the template included; `--pending` exits 0
+there, because the template never releases (below).
 ⚠ Claude Code reads project hooks only from the directory it was **launched in**, after that folder is
 trusted. Started from a parent directory, it never loads them and nothing says so.
 ⚠ It checks that the heading **exists**, not that it describes everything: a second `feat:` branch

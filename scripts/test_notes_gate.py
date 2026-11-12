@@ -31,13 +31,30 @@ class Order(unittest.TestCase):
 
 
 class Pending(unittest.TestCase):
+    def pending_in(self, root):
+        with (
+            mock.patch.multiple(gate, ROOT=root, LISTING=root / "store-listing.md"),
+            mock.patch.object(gate, "git") as git,
+            mock.patch.object(gate.subprocess, "run", return_value=mock.Mock(returncode=1)) as run,
+        ):
+            owed = gate.pending("origin/main")
+        return owed, git, run
+
     def test_the_template_itself_owes_no_notes(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root / "bootstrap.py").write_text("")
-            with mock.patch.object(gate, "ROOT", root), mock.patch.object(gate, "git") as git:
-                self.assertEqual(gate.pending("origin/main"), 0)
-            git.assert_not_called()
+            owed, git, run = self.pending_in(root)
+        self.assertEqual(owed, 0)
+        git.assert_not_called()
+        run.assert_not_called()
+
+    def test_an_app_without_bootstrap_asks_git(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            owed, git, run = self.pending_in(Path(tmp))
+        self.assertEqual(owed, 0)
+        run.assert_called_once()
+        self.assertEqual(run.call_args.args[0][3:5], ["rev-parse", "--verify"])
 
 
 if __name__ == "__main__":
