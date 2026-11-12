@@ -126,7 +126,7 @@ them — including the pre-1.0 options in `release-please-config.json`. Replayed
 of an app built from this template, it proposed the version release-please actually cut every time.
 It exits **2** when that version has no `### x.y.z` on the branch or on `main`, and 0 when no release
 is pending — a docs-only branch never owes notes — and in the template itself, which still holds
-`bootstrap.py` and never releases (below).
+`scripts/test_bootstrap.py` (bootstrap deletes it) and never releases (below).
 
 **Claude Code runs it before every `git push` it makes — once `bootstrap.py` has installed the hook.**
 `.claude/settings.json` gets a `PreToolUse` hook on every Bash call, and `scripts/push-notes-hook.py`

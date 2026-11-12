@@ -161,9 +161,9 @@ def next_version(current: str, level: int) -> str | None:
 
 
 def pending(base: str) -> int:
-    # Only the template still holds bootstrap.py (an app's owner removes it after running it), and the
-    # template never releases: release-please.yml skips it.
-    if (ROOT / "bootstrap.py").exists():
+    # Only the template still holds scripts/test_bootstrap.py (bootstrap.py deletes it while making an
+    # app), and the template never releases: release-please.yml skips it.
+    if (ROOT / "scripts/test_bootstrap.py").exists():
         return 0
     listing = LISTING.relative_to(ROOT).as_posix()
     # A repository fresh from bootstrap.py has no remote branch until its first push, and nothing has
