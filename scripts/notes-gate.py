@@ -161,6 +161,9 @@ def next_version(current: str, level: int) -> str | None:
 
 
 def pending(base: str) -> int:
+    # The template never releases (release-please.yml skips it); an app made from it deletes bootstrap.py.
+    if (ROOT / "bootstrap.py").exists():
+        return 0
     listing = LISTING.relative_to(ROOT).as_posix()
     # A repository fresh from bootstrap.py has no remote branch until its first push, and nothing has
     # been released to compare against - so nothing can be owed yet.

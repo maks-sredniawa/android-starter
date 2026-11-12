@@ -30,5 +30,15 @@ class Order(unittest.TestCase):
         self.assertIn("out of order: ### 0.1.0 comes after ### 0.2.0", str(refused.exception.code))
 
 
+class Pending(unittest.TestCase):
+    def test_the_template_itself_owes_no_notes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "bootstrap.py").write_text("")
+            with mock.patch.object(gate, "ROOT", root), mock.patch.object(gate, "git") as git:
+                self.assertEqual(gate.pending("origin/main"), 0)
+            git.assert_not_called()
+
+
 if __name__ == "__main__":
     unittest.main()
