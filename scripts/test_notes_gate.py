@@ -43,15 +43,18 @@ class Pending(unittest.TestCase):
     def test_the_template_itself_owes_no_notes(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            (root / "bootstrap.py").write_text("")
+            (root / "scripts").mkdir()
+            (root / "scripts/test_bootstrap.py").write_text("")
             owed, git, run = self.pending_in(root)
         self.assertEqual(owed, 0)
         git.assert_not_called()
         run.assert_not_called()
 
-    def test_an_app_without_bootstrap_asks_git(self):
+    def test_an_app_still_holding_bootstrap_py_asks_git(self):
         with tempfile.TemporaryDirectory() as tmp:
-            owed, git, run = self.pending_in(Path(tmp))
+            root = Path(tmp)
+            (root / "bootstrap.py").write_text("")
+            owed, git, run = self.pending_in(root)
         self.assertEqual(owed, 0)
         run.assert_called_once()
         self.assertEqual(run.call_args.args[0][3:5], ["rev-parse", "--verify"])
