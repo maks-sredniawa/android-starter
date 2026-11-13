@@ -25,7 +25,7 @@ private const val MORE_APPS_URL = "https://maksforge.com/"
  *
  * **The tag is never translated and the prompt is.** The tag is what you sort your own mail on and the
  * user never reads; the prompt is a sentence addressed to them. A Polish bug report arriving under
- * "Starter #bug" is the correct outcome of an app with a Polish locale.
+ * "`<MAIL_TAG> #bug`" is the correct outcome of an app with a Polish locale.
  */
 enum class SupportRequest(
     val tag: String,
