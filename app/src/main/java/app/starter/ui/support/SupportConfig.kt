@@ -2,7 +2,7 @@ package app.starter.ui.support
 
 /**
  * Everything about Help and feedback that differs from one app to the next — **the one file in
- * `ui/support/` that `scripts/sync-support.py` never overwrites.** Every other file in this package,
+ * `ui/support/` that android-starter's `scripts/sync-support.py` never overwrites.** Every other file in this package,
  * and the `shared:support` block of each `strings.xml`, comes from android-starter.
  *
  * Each constant is compiled into every build and frozen there for as long as a sideloaded copy
