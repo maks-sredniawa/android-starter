@@ -110,7 +110,7 @@ fun SupportScreen(
                         if (copied ==
                             Copied.Address
                         ) {
-                            R.string.support_version_copied
+                            R.string.support_copied
                         } else {
                             R.string.support_address_hint
                         },
@@ -166,7 +166,7 @@ fun SupportScreen(
                         if (copied ==
                             Copied.Version
                         ) {
-                            R.string.support_version_copied
+                            R.string.support_copied
                         } else {
                             R.string.support_version_hint
                         },
