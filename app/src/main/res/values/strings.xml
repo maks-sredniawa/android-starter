@@ -59,8 +59,6 @@
     <string name="settings_language_system">System</string>
     <string name="settings_language_english" translatable="false">English</string>
     <string name="settings_language_polish" translatable="false">Polski</string>
-    <string name="settings_language_report">Something read wrong?</string>
-    <string name="settings_language_report_hint">Tell me if a word looks wrong in your language. Opens your email app, with the language you are reading already filled in.</string>
     <string name="settings_reminders">Reminders</string>
     <string name="settings_reminders_enabled">Remind me</string>
     <string name="settings_reminders_hint">A single daily check. Nothing is sent anywhere.</string>
@@ -77,35 +75,6 @@
     <string name="settings_restore_confirm_title">Restore default settings?</string>
     <string name="settings_restore_confirm_body">The theme, colours, reminders and language go back to how the app came. Your items and backups stay as they are. This cannot be undone.</string>
     <string name="settings_restore_confirm">Restore</string>
-    <string name="settings_about">About</string>
-    <string name="settings_support">Help and feedback</string>
-    <string name="settings_licences">Open-source licences</string>
-
-    <!-- Help and feedback. The three `support_subject_*` are translatable="false" on purpose:
-         they are the filter tag you sort your own mail on and the user never reads them, while
-         the prompt beside each one is a sentence addressed to them and is translated. A Polish
-         report arriving under the untranslated "#bug" subject is the correct outcome. -->
-    <string name="support_title">Help and feedback</string>
-    <string name="support_report">Report a problem</string>
-    <string name="support_report_hint">Opens your email app with what the app knows about your phone already filled in.</string>
-    <string name="support_feature">Suggest a feature</string>
-    <string name="support_feature_hint">Say what you would like the app to do, and what you would use it for.</string>
-    <string name="support_subject_bug" translatable="false">Starter #bug</string>
-    <string name="support_subject_feature" translatable="false">Starter #feature</string>
-    <string name="support_subject_language" translatable="false">Starter #language</string>
-    <string name="support_body_bug">What happened, and what you expected instead:</string>
-    <string name="support_body_feature">What would you like the app to do?</string>
-    <string name="support_body_language">Which word read wrong, and on which screen?</string>
-    <string name="support_no_mail_app">No email app on this phone to open.</string>
-    <string name="support_rate">Rate this app on Google Play</string>
-    <string name="support_rate_hint">Opens this app on Google Play. Rating is optional and unlocks nothing.</string>
-    <string name="support_no_play">No Google Play or web browser on this phone to open.</string>
-    <!-- The tip (ADR-0007): a payment to the developer that unlocks nothing. Never "donate" or
-         "support the project". The buttons are Play's own formatted prices, not strings -->
-    <string name="support_tip">Tip the developer</string>
-    <string name="support_tip_hint">A one-off tip, paid through Google Play. It unlocks nothing, because nothing in this app is locked.</string>
-    <string name="support_tip_thanks">Thank you. It means a lot.</string>
-    <string name="support_tip_pending">Your payment is still being processed. Google Play will finish it.</string>
 
     <!-- Backup -->
     <string name="backup_explainer">Everything stays on this phone. A backup is a single file you keep wherever you like.</string>
@@ -125,7 +94,6 @@
     </plurals>
 
     <!-- Licences -->
-    <string name="licence_text_missing">The text of this licence is not bundled with the app.</string>
 
     <!-- Notification channels. The convention `channel_<id>_name` / `channel_<id>_description` is
          asserted by ReminderChannelsTest, so a new channel cannot ship with no name. -->
@@ -136,4 +104,44 @@
     <string name="schema_mismatch_title">This data was saved by a different version</string>
     <string name="schema_mismatch_body">The data on this phone was saved at version %1$d, and this build reads version %2$d.</string>
     <string name="schema_mismatch_copy">A copy has been kept as %1$s. Nothing has been deleted.</string>
+
+    <!-- shared:support begin. Synced into every app by android-starter's scripts/sync-support.py:
+         change it there, never in an app. -->
+    <string name="settings_about">About</string>
+    <string name="settings_support">Help and feedback</string>
+    <string name="settings_licences">Open-source licences</string>
+    <string name="settings_language_report">Something read wrong?</string>
+    <string name="settings_language_report_hint">Tell me if a word looks wrong in your language. Opens your email app, with the language you are reading already filled in.</string>
+    <string name="support_title">Help and feedback</string>
+    <string name="support_report">Report a problem</string>
+    <string name="support_report_hint">Opens your email app with what the app knows about your phone already filled in.</string>
+    <string name="support_feature">Suggest a feature</string>
+    <string name="support_feature_hint">Say what you would like the app to do, and what you would use it for.</string>
+    <string name="support_body_bug">What happened, and what you expected instead:</string>
+    <string name="support_body_feature">What would you like the app to do?</string>
+    <string name="support_body_language">Which word read wrong, and on which screen?</string>
+    <string name="support_no_mail_app">No email app on this phone to open.</string>
+    <string name="support_rate">Rate this app on Google Play</string>
+    <string name="support_rate_hint">Opens this app on Google Play. Rating is optional and unlocks nothing.</string>
+    <string name="support_no_play">No Google Play or web browser on this phone to open.</string>
+    <!-- The tip (ADR-0007): a payment to the developer that unlocks nothing. Never "donate" or
+         "support the project". The buttons are Play's own formatted prices, not strings -->
+    <string name="support_tip">Tip the developer</string>
+    <string name="support_tip_hint">A one-off tip, paid through Google Play. It unlocks nothing, because nothing in this app is locked.</string>
+    <string name="support_tip_thanks">Thank you. It means a lot.</string>
+    <string name="support_tip_pending">Your payment is still being processed. Google Play will finish it.</string>
+    <string name="licence_text_missing">The text of this licence is not bundled with the app.</string>
+    <!-- %1$s is the version, e.g. "1.4.0 (23)". -->
+    <string name="support_no_browser">No web browser on this phone to open.</string>
+    <string name="support_site">App web page</string>
+    <string name="support_privacy">Privacy policy</string>
+    <string name="support_privacy_hint">Opens in your browser.</string>
+    <string name="support_credits">Credits</string>
+    <string name="support_credits_hint">Open-source licences</string>
+    <string name="support_more_apps">More MaksForge apps</string>
+    <string name="support_more_apps_hint">Other free apps by the same developer.</string>
+    <string name="support_version">Version %1$s</string>
+    <string name="support_version_hint">Tap to copy.</string>
+    <string name="support_version_copied">Copied.</string>
+    <!-- shared:support end -->
 </resources>

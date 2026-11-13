@@ -18,9 +18,13 @@ What it changes, and nothing else:
   * `docs/_config.yml`       — the site title, its icon path and the in-development status; the
                                template's `kind:` line is dropped, so the page falls back to its
                                Play or Chrome kind
-  * `scripts/test_bootstrap.py` — deleted, since it tests this file, which the new app deletes
-  * the support address      — `SupportHandoff.kt`, the site, the privacy policy and the Play docs,
-                               `<repo>.support@maksforge.com` unless `--support` says otherwise
+  * `scripts/test_bootstrap.py`, `scripts/sync-support.py`, `scripts/test_sync_support.py` — deleted:
+                               the first tests this file, which the new app deletes, and the sync
+                               only ever runs from android-starter into an app
+  * `ui/support/SupportConfig.kt` — the support address, Play package, mail tag and site URL. The
+                               address is `<repo>.support@maksforge.com` unless `--support` says
+                               otherwise, and it also goes into the site, the privacy policy and the
+                               Play docs
   * `docs/*.md`              — `<repo>` in the maksforge.com and GitHub URLs
   * `fastlane/Appfile`, the three publish workflows — the Play package name
   * `app/schemas/`           — the exported schema moves with the database class
@@ -335,11 +339,6 @@ def main() -> int:
                     f'"app_name" translatable="false">{TEMPLATE_NAME} debug<',
                     f'"app_name" translatable="false">{args.name} debug<',
                 ),
-                # The three `support_subject_*` tags — "Starter #bug" and friends. They carry the
-                # app name and are translatable="false", so neither the rule above them nor the
-                # translation gate reaches them, and a mail filter on the wrong name is invisible
-                # until the first report arrives.
-                (f">{TEMPLATE_NAME} #", f">{args.name} #"),
             ],
         )
     rewrite(ROOT / "app/src/main/java" / args.namespace.replace(".", "/") / "data/AppDatabase.kt",
@@ -366,7 +365,8 @@ def main() -> int:
     (ROOT / "CHANGELOG.md").write_text(f"# Changelog\n\nNothing released yet.\n")
 
     rewrite(ROOT / "docs/_config.yml", site_config_replacements(args.name, ROOT.name))
-    (ROOT / "scripts/test_bootstrap.py").unlink(missing_ok=True)
+    for script in ["test_bootstrap.py", "sync-support.py", "test_sync_support.py"]:
+        (ROOT / "scripts" / script).unlink(missing_ok=True)
 
     owner = subprocess.run(["git", "config", "user.name"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
     (ROOT / "LICENSE").write_text(
@@ -383,8 +383,12 @@ def main() -> int:
     print(f"README.md and LICENSE replaced — {args.licence}")
 
     rewrite(
-        ROOT / "app/src/main/java" / args.namespace.replace(".", "/") / "ui/support/SupportHandoff.kt",
-        [(f'SUPPORT_ADDRESS = "{TEMPLATE_SUPPORT_ADDRESS}"', f'SUPPORT_ADDRESS = "{support}"')],
+        ROOT / "app/src/main/java" / args.namespace.replace(".", "/") / "ui/support/SupportConfig.kt",
+        [
+            (f'SUPPORT_ADDRESS = "{TEMPLATE_SUPPORT_ADDRESS}"', f'SUPPORT_ADDRESS = "{support}"'),
+            (f'MAIL_TAG = "{TEMPLATE_NAME}"', f'MAIL_TAG = "{args.name}"'),
+            (f'SITE_URL = "{SITE}/android-starter/"', f'SITE_URL = "{SITE}/{repo}/"'),
+        ],
     )
     doc_replacements = [
         ("<support email>", support),
@@ -405,7 +409,7 @@ def main() -> int:
         ROOT / ".github/workflows/publish-play-closed.yml",
         # The rate-on-Play link. A debug build carries `.debug`, which Play has never heard of, so
         # the listing's id is stated rather than derived from BuildConfig.
-        ROOT / "app/src/main/java" / args.namespace.replace(".", "/") / "ui/support/SupportHandoff.kt",
+        ROOT / "app/src/main/java" / args.namespace.replace(".", "/") / "ui/support/SupportConfig.kt",
     ]:
         rewrite(path, [(TEMPLATE_APP_ID, args.appid)])
 
