@@ -1,6 +1,10 @@
 package app.starter.ui.support
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import app.starter.R
@@ -23,10 +27,13 @@ fun AboutSection(
 @Composable
 fun LanguageReportRow() {
     val context = LocalContext.current
+    // Not `rememberSaveable`, as on Help: only the tap just made went nowhere.
+    var noMailApp by remember { mutableStateOf(false) }
     LinkRow(
         title = stringResource(SupportRequest.Language.titleRes()),
         subtitle = stringResource(SupportRequest.Language.hintRes()),
         target = LinkTarget.Outside,
-        onClick = { context.sendSupportMail(SupportRequest.Language) },
+        onClick = { noMailApp = !context.sendSupportMail(SupportRequest.Language) },
     )
+    if (noMailApp) MissingAppText(R.string.support_no_mail_app)
 }

@@ -41,7 +41,7 @@ import app.starter.ui.common.SectionHeader
  *
  * No `ViewModel`: every row builds an intent from [SupportConfig] and hands it to the system. The
  * [tip] slot is the exception — the app passes `{ TipSection() }`, which holds its own `ViewModel`
- * (ADR-0007), and an app without the tip passes nothing.
+ * (the tip's ADR, a Play Billing consumable), and an app without the tip passes nothing.
  */
 @Composable
 fun SupportScreen(
@@ -68,14 +68,7 @@ fun SupportScreen(
 
     @Composable
     fun MissingAppMessage(group: SupportGroup) {
-        missingApp?.takeIf { it.group == group }?.let {
-            Text(
-                text = stringResource(it.message),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier.padding(horizontal = Spacing.base, vertical = Spacing.snug),
-            )
-        }
+        missingApp?.takeIf { it.group == group }?.let { MissingAppText(it.message) }
     }
 
     DetailScaffold(
@@ -179,6 +172,18 @@ fun SupportScreen(
             )
         }
     }
+}
+
+@Composable
+internal fun MissingAppText(
+    @StringRes message: Int,
+) {
+    Text(
+        text = stringResource(message),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.error,
+        modifier = Modifier.padding(horizontal = Spacing.base, vertical = Spacing.snug),
+    )
 }
 
 private enum class SupportGroup { Feedback, About }
