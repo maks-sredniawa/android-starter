@@ -136,6 +136,21 @@ def first_config(app: Path, namespace: str) -> str:
     return retarget(starter, namespace)
 
 
+MEMBER = re.compile(r"(?:[ \t]*/\*\*.*?\*/\n)?[ \t]*(?:const )?val (\w+)\b[^\n]*\n", re.S)
+
+
+def with_new_members(app_config: str) -> tuple[str, list[str]]:
+    """The app's config with any member the template gained since, at the template's default."""
+    template = (package_dir(project.ROOT, "main", project.NAMESPACE) / CONFIG).read_text(encoding="utf-8")
+    body = template[template.index("object SupportConfig") :]
+    missing = [m for m in MEMBER.finditer(body) if not re.search(rf"\bval {m.group(1)}\b", app_config)]
+    if not missing:
+        return app_config, []
+    end = app_config.rstrip().rindex("}")
+    added = "".join("\n" + m.group(0) for m in missing)
+    return app_config[:end].rstrip("\n") + "\n" + added + "}\n", [m.group(1) for m in missing]
+
+
 def plan(app: Path) -> tuple[dict[Path, str], list[str]]:
     """Every file the sync would write, with its new content, and what it wants a human to know."""
     namespace = namespace_of(app)
@@ -156,6 +171,11 @@ def plan(app: Path) -> tuple[dict[Path, str], list[str]]:
     if not config.is_file():
         print(f"{app.name}: no {CONFIG} yet, writing it from what the app compiles in:")
         writes[config] = first_config(app, namespace)
+    else:
+        merged, added = with_new_members(config.read_text(encoding="utf-8"))
+        if added:
+            writes[config] = merged
+            notes.append(f"added {', '.join(added)} to {CONFIG} at the template's default")
 
     res = project.ROOT / "app/src/main/res"
     translated = set()

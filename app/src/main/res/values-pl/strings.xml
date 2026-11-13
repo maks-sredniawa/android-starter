@@ -108,7 +108,10 @@
     <string name="support_privacy">Polityka prywatności</string>
     <string name="support_privacy_hint">Otwiera się w przeglądarce.</string>
     <string name="support_credits">Podziękowania</string>
-    <string name="support_credits_hint">Licencje open source</string>
+    <string name="support_credits_hint">Kto zrobił aplikację i licencje open source</string>
+    <string name="credits_made_by">Autor</string>
+    <string name="credits_creator">Twórca</string>
+    <string name="credits_helped_by">Pomogli</string>
     <string name="support_more_apps">Więcej aplikacji MaksForge</string>
     <string name="support_more_apps_hint">Inne darmowe aplikacje tego samego twórcy.</string>
     <string name="support_version">Wersja %1$s</string>

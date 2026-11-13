@@ -135,7 +135,10 @@
     <string name="support_privacy">Privacy policy</string>
     <string name="support_privacy_hint">Opens in your browser.</string>
     <string name="support_credits">Credits</string>
-    <string name="support_credits_hint">Open-source licences</string>
+    <string name="support_credits_hint">Who made the app, and open-source licences</string>
+    <string name="credits_made_by">Made by</string>
+    <string name="credits_creator">Creator</string>
+    <string name="credits_helped_by">With help from</string>
     <string name="support_more_apps">More MaksForge apps</string>
     <string name="support_more_apps_hint">Other free apps by the same developer.</string>
     <!-- %1$s is the version, e.g. "1.4.0 (23)". -->

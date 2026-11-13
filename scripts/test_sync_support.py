@@ -79,10 +79,11 @@ class Sync(unittest.TestCase):
             app = make_app(Path(tmp))
             config = app / "app/src/main/java/app/kettle/ui/support/SupportConfig.kt"
             config.parent.mkdir(parents=True, exist_ok=True)
-            config.write_text("// the app's own\n")
+            own = "object SupportConfig {\n    const val SUPPORT_ADDRESS = \"mine\"\n}\n"
+            config.write_text(own)
             run(str(app))
             screen = (app / "app/src/main/java/app/kettle/ui/support/SupportScreen.kt").read_text()
-            self.assertEqual(config.read_text(), "// the app's own\n")
+            self.assertIn('SUPPORT_ADDRESS = "mine"', config.read_text())
             self.assertTrue((app / "app/src/main/java/app/kettle/tip/TipJar.kt").is_file())
         self.assertNotIn("app.starter", screen)
         self.assertIn("import app.kettle.R", screen)
@@ -123,6 +124,22 @@ class Sync(unittest.TestCase):
             base = (app / "app/src/main/res/values/strings.xml").read_text()
         self.assertNotIn("support_tip", base)
         self.assertIn('name="support_rate"', base)
+
+    def test_a_member_the_template_gained_is_added_to_an_existing_config(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            app = make_app(Path(tmp))
+            config = app / "app/src/main/java/app/kettle/ui/support/SupportConfig.kt"
+            config.parent.mkdir(parents=True, exist_ok=True)
+            config.write_text('package app.kettle.ui.support\n\nobject SupportConfig {\n    const val SUPPORT_ADDRESS = "mine@maksforge.com"\n}\n')
+            run(str(app))
+            text = config.read_text()
+            run(str(app))
+            again = config.read_text()
+        self.assertIn('SUPPORT_ADDRESS = "mine@maksforge.com"', text)
+        self.assertIn("val CONTRIBUTORS: List<Contributor> = emptyList()", text)
+        self.assertIn('MAIL_TAG = "Starter"', text)
+        self.assertEqual(text, again)
+        self.assertTrue(text.endswith("}\n"))
 
     def test_a_kept_file_is_left_alone(self):
         with tempfile.TemporaryDirectory() as tmp:
