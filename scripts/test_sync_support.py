@@ -17,9 +17,13 @@ spec.loader.exec_module(sync)
 GRADLE = 'android {\n    namespace = "app.kettle"\n    defaultConfig {\n        applicationId = "com.maksforge.kettle"\n    }\n}\n'
 OLD_STRINGS = """<resources>
     <string name="app_name" translatable="false">Kettle</string>
+    <!-- Help and feedback. The three `support_subject_*` are translatable="false" on purpose:
+         the old note. -->
     <string name="support_title">Old title</string>
     <string name="support_subject_bug" translatable="false">Kettle Brew #bug</string>
     <string name="kettle_own">Mine</string>
+    <!-- Licences -->
+    <string name="licence_text_missing">old</string>
 </resources>
 """
 OLD_HANDOFF = 'package app.kettle.ui.support\n\nprivate const val SUPPORT_ADDRESS = "kettle.help@maksforge.com"\n'
@@ -84,6 +88,8 @@ class Sync(unittest.TestCase):
         self.assertEqual(len(re.findall(r'name="support_title"', base)), 1)
         self.assertNotIn("Old title", base)
         self.assertNotIn("support_subject_bug", base)
+        self.assertNotIn("Help and feedback. The three", base)
+        self.assertNotIn("<!-- Licences -->", base)
         self.assertIn('name="kettle_own"', base)
         self.assertNotIn(sync.BEGIN, german)
 
