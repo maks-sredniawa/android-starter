@@ -56,7 +56,7 @@ fun SupportScreen(
     // made. One slot for the whole screen, because only the most recent tap is worth reporting, and
     // it renders under the group that holds the row.
     var missingApp by remember { mutableStateOf<MissingApp?>(null) }
-    var versionCopied by remember { mutableStateOf(false) }
+    var copied by remember { mutableStateOf<Copied?>(null) }
 
     fun reportHandOff(
         opened: Boolean,
@@ -104,6 +104,24 @@ fun SupportScreen(
                 )
             }
             LinkRow(
+                title = SupportConfig.SUPPORT_ADDRESS,
+                subtitle =
+                    stringResource(
+                        if (copied ==
+                            Copied.Address
+                        ) {
+                            R.string.support_version_copied
+                        } else {
+                            R.string.support_address_hint
+                        },
+                    ),
+                target = LinkTarget.Here,
+                onClick = {
+                    context.copyToClipboard(SupportConfig.SUPPORT_ADDRESS)
+                    copied = Copied.Address
+                },
+            )
+            LinkRow(
                 title = stringResource(R.string.support_rate),
                 subtitle = stringResource(R.string.support_rate_hint),
                 target = LinkTarget.Outside,
@@ -145,12 +163,18 @@ fun SupportScreen(
                 title = stringResource(R.string.support_version, versionNumber),
                 subtitle =
                     stringResource(
-                        if (versionCopied) R.string.support_version_copied else R.string.support_version_hint,
+                        if (copied ==
+                            Copied.Version
+                        ) {
+                            R.string.support_version_copied
+                        } else {
+                            R.string.support_version_hint
+                        },
                     ),
                 target = LinkTarget.Here,
                 onClick = {
                     context.copyToClipboard(context.versionLine())
-                    versionCopied = true
+                    copied = Copied.Version
                 },
             )
         }
@@ -158,6 +182,8 @@ fun SupportScreen(
 }
 
 private enum class SupportGroup { Feedback, About }
+
+private enum class Copied { Address, Version }
 
 private data class MissingApp(
     val group: SupportGroup,

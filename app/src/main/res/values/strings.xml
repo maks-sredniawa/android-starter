@@ -112,13 +112,14 @@
     <string name="settings_language_report_hint">Tell me if a word looks wrong in your language. Opens your email app, with the language you are reading already filled in.</string>
     <string name="support_title">Help and feedback</string>
     <string name="support_report">Report a problem</string>
-    <string name="support_report_hint">Opens your email app with what the app knows about your phone already filled in.</string>
+    <string name="support_report_hint">Opens your email app with the app version, Android version, phone model and language filled in. Nothing is sent until you tap send.</string>
     <string name="support_feature">Suggest a feature</string>
     <string name="support_feature_hint">Say what you would like the app to do, and what you would use it for.</string>
     <string name="support_body_bug">What happened, and what you expected instead:</string>
     <string name="support_body_feature">What would you like the app to do?</string>
     <string name="support_body_language">Which word read wrong, and on which screen?</string>
-    <string name="support_no_mail_app">No email app on this phone to open.</string>
+    <string name="support_no_mail_app">No email app on this phone to open. You can copy the address above.</string>
+    <string name="support_address_hint">Write directly. Tap to copy the address.</string>
     <string name="support_rate">Rate this app on Google Play</string>
     <string name="support_rate_hint">Opens this app on Google Play. Rating is optional and unlocks nothing.</string>
     <string name="support_no_play">No Google Play or web browser on this phone to open.</string>

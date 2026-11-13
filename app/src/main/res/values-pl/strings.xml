@@ -87,13 +87,14 @@
     <string name="settings_language_report_hint">Napisz, jeśli jakieś słowo jest nie tak w twoim języku. Otwiera aplikację pocztową z już wpisanym językiem, w którym czytasz.</string>
     <string name="support_title">Pomoc i opinie</string>
     <string name="support_report">Zgłoś problem</string>
-    <string name="support_report_hint">Otwiera aplikację pocztową z już wpisanymi informacjami o telefonie, które aplikacja zna.</string>
+    <string name="support_report_hint">Otwiera aplikację pocztową z wpisaną wersją aplikacji, wersją Androida, modelem telefonu i językiem. Nic nie zostanie wysłane, dopóki nie dotkniesz „Wyślij”.</string>
     <string name="support_feature">Zaproponuj funkcję</string>
     <string name="support_feature_hint">Napisz, co aplikacja mogłaby robić i do czego byś tego używał.</string>
     <string name="support_body_bug">Co się stało i co powinno się stać zamiast tego:</string>
     <string name="support_body_feature">Co aplikacja mogłaby robić?</string>
     <string name="support_body_language">Które słowo jest nie tak i na którym ekranie?</string>
-    <string name="support_no_mail_app">Na tym telefonie nie ma aplikacji pocztowej do otwarcia.</string>
+    <string name="support_no_mail_app">Na tym telefonie nie ma aplikacji pocztowej do otwarcia. Możesz skopiować adres powyżej.</string>
+    <string name="support_address_hint">Napisz bezpośrednio. Dotknij, aby skopiować adres.</string>
     <string name="support_rate">Oceń tę aplikację w Google Play</string>
     <string name="support_rate_hint">Otwiera stronę aplikacji w Google Play. Ocena jest dobrowolna i niczego nie odblokowuje.</string>
     <string name="support_no_play">Na tym telefonie nie ma Google Play ani przeglądarki do otwarcia.</string>
