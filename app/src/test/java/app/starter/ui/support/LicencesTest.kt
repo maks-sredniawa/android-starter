@@ -78,11 +78,11 @@ class LicencesTest {
     }
 
     @Test
-    fun `malformed input throws, and the ViewModel is where that is caught`() {
+    fun `malformed input throws, and licencesOrBundled is where that is caught`() {
         // Deliberately *not* swallowed here. This function's job is to parse; a report it cannot
         // parse means the build's generator is broken, and returning an empty list would hide that
-        // behind an empty screen. `LicencesViewModel` wraps the call so a user never sees a crash,
-        // which is the right place for the decision — one caller, one policy.
+        // behind an empty screen. `licencesOrBundled` catches it and falls back to the bundled
+        // credits, so a user never sees a crash — one caller, one policy.
         assertThrows(Exception::class.java) { groupLicences("not json") }
     }
 
