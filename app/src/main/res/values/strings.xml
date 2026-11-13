@@ -119,6 +119,8 @@
     <string name="support_body_feature">What would you like the app to do?</string>
     <string name="support_body_language">Which word read wrong, and on which screen?</string>
     <string name="support_no_mail_app">No email app on this phone to open. You can copy the address above.</string>
+    <!-- %1$s is the support email address. -->
+    <string name="support_no_mail_app_write_to">No email app on this phone to open. You can write to %1$s.</string>
     <string name="support_address_hint">Write directly. Tap to copy the address.</string>
     <string name="support_rate">Rate this app on Google Play</string>
     <string name="support_rate_hint">Opens this app on Google Play. Rating is optional and unlocks nothing.</string>
