@@ -59,8 +59,11 @@ fun LicencesScreen(
                 Column {
                     SectionHeader(stringResource(R.string.credits_made_by))
                     PersonRow(CREATOR, stringResource(R.string.credits_creator))
+                    // Read even with no helpers: the release build's resource shrinker drops a string only
+                    // an always-false branch uses, and the bundle's locale check then refuses the upload.
+                    val helpedBy = stringResource(R.string.credits_helped_by)
                     if (SupportConfig.CONTRIBUTORS.isNotEmpty()) {
-                        SectionHeader(stringResource(R.string.credits_helped_by))
+                        SectionHeader(helpedBy)
                         SupportConfig.CONTRIBUTORS.forEach { PersonRow(it.name, stringResource(it.role)) }
                     }
                     HorizontalDivider(modifier = Modifier.padding(top = Spacing.section))

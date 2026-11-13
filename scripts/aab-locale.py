@@ -49,7 +49,8 @@ def resolve(node):
     if len(text) >= 2 and text.startswith('"') and text.endswith('"'):
         text = text[1:-1]
     else:
-        text = re.sub(r"\s+", " ", text).strip()
+        # ASCII whitespace only, as aapt2 collapses it: a no-break space (French "fasse ?") is text.
+        text = re.sub(r"[ \t\r\n]+", " ", text).strip(" \t\r\n")
 
     # Only *then* are Android's own escapes turned into characters. The order is
     # load-bearing: \n means a real newline in the resource table, so unescaping
