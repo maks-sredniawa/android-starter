@@ -164,8 +164,9 @@ android {
                 "NewerVersionAvailable",
                 "OldTargetApi",
             )
-        // Resource shrinking strips an unused string from the release bundle, which fails
-        // `aab-locale.py` at publish time; this fails the PR instead.
+        // Fails a string nothing references. A string whose only read R8 proves dead is still
+        // referenced, so lint passes it and resource shrinking strips it from the release bundle:
+        // only `aab-locale.py` on that bundle sees it, which ci.yml's `release-bundle` job runs.
         error += "UnusedResources"
     }
 }
