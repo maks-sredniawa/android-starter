@@ -112,7 +112,7 @@
     <string name="settings_language_report_hint">Tell me if a word looks wrong in your language. Opens your email app, with the language you are reading already filled in.</string>
     <string name="support_title">Help and feedback</string>
     <string name="support_report">Report a problem</string>
-    <string name="support_report_hint">Opens your email app with the app version, Android version, phone model and language filled in. Nothing is sent until you tap send.</string>
+    <string name="support_report_hint">Opens your email app with the app version, Android version, phone model and language filled in, and nothing you have recorded in the app. Nothing is sent until you tap send.</string>
     <string name="support_feature">Suggest a feature</string>
     <string name="support_feature_hint">Say what you would like the app to do, and what you would use it for.</string>
     <string name="support_body_bug">What happened, and what you expected instead:</string>
