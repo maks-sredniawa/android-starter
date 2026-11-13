@@ -151,6 +151,20 @@ class Sync(unittest.TestCase):
             self.assertFalse((app / "app/src/main/java/app/kettle/ui/support/LicencesScreen.kt").exists())
         self.assertIn("kept the app's own ui/support/LicencesScreen.kt", out)
 
+    def test_a_kept_credits_screen_without_the_people_is_reported(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            app = make_app(Path(tmp))
+            (app / "scripts").mkdir()
+            (app / "scripts/support-sync.keep").write_text("ui/support/LicencesScreen.kt\n")
+            screen = app / "app/src/main/java/app/kettle/ui/support/LicencesScreen.kt"
+            screen.write_text("PersonRow(CREATOR, creator)\n")
+            _, without = run(str(app))
+            screen.write_text("PersonRow(CREATOR, creator)\nSupportConfig.CONTRIBUTORS.forEach {}\n")
+            _, with_people = run(str(app))
+        note = "must show CREATOR and CONTRIBUTORS"
+        self.assertIn(note, without)
+        self.assertNotIn(note, with_people)
+
 
 if __name__ == "__main__":
     unittest.main()
