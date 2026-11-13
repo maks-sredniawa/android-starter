@@ -133,4 +133,24 @@ class LicencesTest {
         assertTrue(LicencesUiState(loading = false).unavailable)
         assertFalse(LicencesUiState(loading = false, groups = listOf(group)).unavailable)
     }
+
+    @Test
+    fun `an unreadable report is flagged even when bundled credits fill the list`() {
+        val bundled =
+            listOf(
+                LicensedArtifact(
+                    groupId = "org.openstreetmap",
+                    artifactId = "data",
+                    version = "1",
+                    spdxLicenses = listOf(SpdxLicence("ODbL-1.0", "Open Database License")),
+                ),
+            )
+
+        val unreadable = readCredits(bundled) { error("asset missing") }
+        val readable = readCredits(bundled) { "[]" }
+
+        assertTrue(unreadable.reportUnreadable)
+        assertEquals(1, unreadable.groups.size)
+        assertEquals(false, readable.reportUnreadable)
+    }
 }

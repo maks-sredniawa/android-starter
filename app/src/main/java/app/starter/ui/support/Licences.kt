@@ -163,7 +163,19 @@ fun groupLicences(
 fun licencesOrBundled(
     bundled: List<LicensedArtifact>,
     report: () -> String,
-): List<LicenceGroup> = runCatching { groupLicences(report(), bundled) }.getOrElse { groupLicences("[]", bundled) }
+): List<LicenceGroup> = readCredits(bundled, report).groups
+
+data class Credits(
+    val groups: List<LicenceGroup>,
+    val reportUnreadable: Boolean,
+)
+
+fun readCredits(
+    bundled: List<LicensedArtifact>,
+    report: () -> String,
+): Credits =
+    runCatching { Credits(groupLicences(report(), bundled), reportUnreadable = false) }
+        .getOrElse { Credits(groupLicences("[]", bundled), reportUnreadable = true) }
 
 sealed interface LicenceLink {
     data class Text(

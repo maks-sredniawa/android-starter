@@ -21,10 +21,8 @@ data class LicencesUiState(
     val loading: Boolean = true,
     val groups: List<LicenceGroup> = emptyList(),
     val bundledTexts: Set<String> = emptySet(),
-) {
-    /** Only once loading is done: an empty list mid-read is not an unreadable report. */
-    val unavailable: Boolean get() = !loading && groups.isEmpty()
-}
+    val unavailable: Boolean = false,
+)
 
 class LicencesViewModel(
     application: Application,
@@ -43,18 +41,19 @@ class LicencesViewModel(
             state.value =
                 withContext(Dispatchers.IO) {
                     val assets = getApplication<Application>().assets
+                    val credits =
+                        readCredits(SupportConfig.BUNDLED_CREDITS) {
+                            assets.open(LICENCES_ASSET).bufferedReader().use { it.readText() }
+                        }
                     LicencesUiState(
                         loading = false,
-                        groups =
-                            licencesOrBundled(SupportConfig.BUNDLED_CREDITS) {
-                                assets.open(LICENCES_ASSET).bufferedReader().use { it.readText() }
-                            },
+                        groups = credits.groups,
                         bundledTexts =
-                            assets
-                                .list(LICENCE_TEXT_DIRECTORY)
-                                .orEmpty()
+                            runCatching { assets.list(LICENCE_TEXT_DIRECTORY).orEmpty() }
+                                .getOrDefault(emptyArray())
                                 .map { it.removeSuffix(".txt") }
                                 .toSet(),
+                        unavailable = credits.reportUnreadable,
                     )
                 }
         }
