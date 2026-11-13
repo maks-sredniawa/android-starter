@@ -79,6 +79,13 @@ def strip_strings(text: str, names: list[str]) -> str:
     return text
 
 
+RETIRED_COMMENTS = re.compile(
+    r"[ \t]*<!-- (?:Help and feedback\. The three `support_subject_\*`|The tip \(ADR-0007\): a payment).*?-->[ \t]*\n"
+    r"|[ \t]*<!-- Licences -->[ \t]*\n(?=\s*(?:<!--|</resources>))",
+    re.S,
+)
+
+
 def block_names(block: str) -> list[str]:
     return re.findall(r'<(?:string|plurals) name="([^"]+)"', block)
 
@@ -87,6 +94,7 @@ def synced_strings(app_text: str, block: str) -> str:
     if BLOCK.search(app_text):
         return BLOCK.sub(lambda _: block, app_text, count=1)
     text = strip_strings(app_text, block_names(block) + RETIRED_STRINGS)
+    text = RETIRED_COMMENTS.sub("", text)
     text = re.sub(r"\n{3,}", "\n\n", text).rstrip()
     return text[: -len("</resources>")].rstrip() + "\n\n" + block + "</resources>\n"
 
