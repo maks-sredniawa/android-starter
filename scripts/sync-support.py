@@ -8,8 +8,10 @@ Run from android-starter, never from an app (bootstrap.py deletes it from a new 
 `ui/support/` and, where the app keeps the tip, `tip/TipJar.kt` and `tip/TipBilling.kt`, their tests,
 and the `shared:support` block of every `strings.xml` this template translates.
 
-Never touched: `ui/support/SupportConfig.kt`, the app's own values. When an app has none yet it is
-written once from what the app already compiles in: the old `SUPPORT_ADDRESS`/`PLAY_PACKAGE`
+Never overwritten: `ui/support/SupportConfig.kt`, the app's own values. A member the template gained
+since is added at its empty default when that default is app-neutral (an `emptyList()`); any other
+missing member is reported for the person to set by hand. When an app has no config yet it is written
+once from what the app already compiles in: the old `SUPPORT_ADDRESS`/`PLAY_PACKAGE`
 constants, the `support_subject_bug` tag, and for the site and the fallback address the repo name of
 the `origin` remote, or the directory name when the app has no `origin`.
 
@@ -139,16 +141,18 @@ def first_config(app: Path, namespace: str) -> str:
 MEMBER = re.compile(r"(?:[ \t]*/\*\*.*?\*/\n)?[ \t]*(?:const )?val (\w+)\b[^\n]*\n", re.S)
 
 
-def with_new_members(app_config: str) -> tuple[str, list[str]]:
-    """The app's config with any member the template gained since, at the template's default."""
+def with_new_members(app_config: str) -> tuple[str, list[str], list[str]]:
+    """The app's config with each missing app-neutral member added, what was added, and what is left to set."""
     template = (package_dir(project.ROOT, "main", project.NAMESPACE) / CONFIG).read_text(encoding="utf-8")
     body = template[template.index("object SupportConfig") :]
     missing = [m for m in MEMBER.finditer(body) if not re.search(rf"\bval {m.group(1)}\b", app_config)]
-    if not missing:
-        return app_config, []
+    neutral = [m for m in missing if m.group(0).rstrip().endswith("emptyList()")]
+    by_hand = [m.group(1) for m in missing if m not in neutral]
+    if not neutral:
+        return app_config, [], by_hand
     end = app_config.rstrip().rindex("}")
-    added = "".join("\n" + m.group(0) for m in missing)
-    return app_config[:end].rstrip("\n") + "\n" + added + "}\n", [m.group(1) for m in missing]
+    added = "".join("\n" + m.group(0) for m in neutral)
+    return app_config[:end].rstrip("\n") + "\n" + added + "}\n", [m.group(1) for m in neutral], by_hand
 
 
 def plan(app: Path) -> tuple[dict[Path, str], list[str]]:
@@ -172,10 +176,12 @@ def plan(app: Path) -> tuple[dict[Path, str], list[str]]:
         print(f"{app.name}: no {CONFIG} yet, writing it from what the app compiles in:")
         writes[config] = first_config(app, namespace)
     else:
-        merged, added = with_new_members(config.read_text(encoding="utf-8"))
+        merged, added, by_hand = with_new_members(config.read_text(encoding="utf-8"))
         if added:
             writes[config] = merged
-            notes.append(f"added {', '.join(added)} to {CONFIG} at the template's default")
+            notes.append(f"added {', '.join(added)} to {CONFIG} at the template's empty default")
+        for name in by_hand:
+            notes.append(f"{CONFIG} has no {name} — set it by hand to this app's own value")
 
     res = project.ROOT / "app/src/main/res"
     translated = set()
