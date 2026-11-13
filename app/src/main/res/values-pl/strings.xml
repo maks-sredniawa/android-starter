@@ -94,6 +94,7 @@
     <string name="support_body_feature">Co aplikacja mogłaby robić?</string>
     <string name="support_body_language">Które słowo jest nie tak i na którym ekranie?</string>
     <string name="support_no_mail_app">Na tym telefonie nie ma aplikacji pocztowej do otwarcia. Możesz skopiować adres powyżej.</string>
+    <string name="support_no_mail_app_write_to">Na tym telefonie nie ma aplikacji pocztowej do otwarcia. Możesz napisać na adres %1$s.</string>
     <string name="support_address_hint">Napisz bezpośrednio. Dotknij, aby skopiować adres.</string>
     <string name="support_rate">Oceń tę aplikację w Google Play</string>
     <string name="support_rate_hint">Otwiera stronę aplikacji w Google Play. Ocena jest dobrowolna i niczego nie odblokowuje.</string>

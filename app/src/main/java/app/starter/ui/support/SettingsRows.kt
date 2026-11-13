@@ -35,5 +35,5 @@ fun LanguageReportRow() {
         target = LinkTarget.Outside,
         onClick = { noMailApp = !context.sendSupportMail(SupportRequest.Language) },
     )
-    if (noMailApp) MissingAppText(R.string.support_no_mail_app)
+    if (noMailApp) MissingAppText(R.string.support_no_mail_app_write_to, SupportConfig.SUPPORT_ADDRESS)
 }

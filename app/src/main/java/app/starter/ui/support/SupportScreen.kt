@@ -177,9 +177,10 @@ fun SupportScreen(
 @Composable
 internal fun MissingAppText(
     @StringRes message: Int,
+    vararg args: Any,
 ) {
     Text(
-        text = stringResource(message),
+        text = stringResource(message, *args),
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.error,
         modifier = Modifier.padding(horizontal = Spacing.base, vertical = Spacing.snug),
