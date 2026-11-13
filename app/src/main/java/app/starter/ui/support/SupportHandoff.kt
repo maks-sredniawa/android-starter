@@ -101,7 +101,7 @@ fun Context.rateOnPlay(): Boolean {
 /** The app's page on maksforge.com, in the browser. */
 fun Context.openSite(): Boolean = openInBrowser(SupportConfig.SITE_URL)
 
-fun Context.openPrivacyPolicy(): Boolean = openInBrowser("${SupportConfig.SITE_URL}privacy-policy")
+fun Context.openPrivacyPolicy(): Boolean = openInBrowser("${SupportConfig.SITE_URL.trimEnd('/')}/privacy-policy")
 
 fun Context.openMoreApps(): Boolean = openInBrowser(MORE_APPS_URL)
 

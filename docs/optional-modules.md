@@ -147,7 +147,7 @@ are marked.
   tip lines in `AppPreferencesTest`
 - `AppContainer.tipJar` and `installedAt` (`applicationScope` keeps its `@Suppress("unused")` for
   this day); `settleTipsOnEveryForeground` and its call in `MainApplication`
-- The `items_tip_ask_*` and `support_tip*` strings, in every language — `scripts/sync-support.py`
+- The `items_tip_ask_*` and `support_tip*` strings, in every language — android-starter's `scripts/sync-support.py`
   leaves the latter out of the shared block for an app with no `tip/`, so later syncs keep them out
 - Gradle: `billing.ktx`, `androidx.lifecycle.process` and licensee's `allowUrl` for Google's terms in
   `app/build.gradle.kts`; the `billing` version and the `billing-ktx` and
