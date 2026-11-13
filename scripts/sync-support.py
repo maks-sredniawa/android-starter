@@ -167,6 +167,11 @@ def plan(app: Path) -> tuple[dict[Path, str], list[str]]:
     for source_set, rel in module_files(has_tip):
         if rel in keep:
             notes.append(f"kept the app's own {rel} (support-sync.keep)")
+            kept = package_dir(app, source_set, namespace) / rel
+            if rel == "ui/support/LicencesScreen.kt" and kept.is_file():
+                text = kept.read_text(encoding="utf-8")
+                if "CREATOR" not in text or "CONTRIBUTORS" not in text:
+                    notes.append(f"the kept {rel} must show CREATOR and CONTRIBUTORS like the template's Credits screen")
             continue
         source = package_dir(project.ROOT, source_set, project.NAMESPACE) / rel
         writes[package_dir(app, source_set, namespace) / rel] = retarget(source.read_text(encoding="utf-8"), namespace)
