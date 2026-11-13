@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -46,6 +47,12 @@ def namespace_of(app: Path) -> str:
 def application_id_of(app: Path) -> str:
     text = (app / "app/build.gradle.kts").read_text(encoding="utf-8")
     return re.search(r'^\s*applicationId\s*=\s*"([^"]+)"', text, re.M).group(1)
+
+
+def repo_name(app: Path) -> str:
+    """The GitHub repo's name, which a worktree's directory name is not."""
+    remote = subprocess.run(["git", "-C", str(app), "remote", "get-url", "origin"], capture_output=True, text=True).stdout.strip()
+    return re.sub(r"\.git$", "", remote.rstrip("/").rsplit("/", 1)[-1].rsplit(":", 1)[-1]) if remote else app.name
 
 
 def package_dir(app: Path, source_set: str, namespace: str) -> Path:
@@ -114,12 +121,13 @@ def first_config(app: Path, namespace: str) -> str:
     base = (app / "app/src/main/res/values/strings.xml").read_text(encoding="utf-8")
     tag = re.search(r'name="support_subject_bug"[^>]*>(.*?) #bug<', base)
     name = re.search(r'name="app_name"[^>]*>([^<]+)<', base)
+    repo = repo_name(app)
     values = {
         "SUPPORT_ADDRESS": existing_constant(app, namespace, ["SUPPORT_ADDRESS", "SUPPORT_EMAIL"])
-        or f"{app.name}.support@maksforge.com",
+        or f"{repo}.support@maksforge.com",
         "PLAY_PACKAGE": existing_constant(app, namespace, ["PLAY_PACKAGE"]) or application_id_of(app),
-        "MAIL_TAG": tag.group(1) if tag else (name.group(1) if name else app.name),
-        "SITE_URL": f"{SITE}/{app.name}/",
+        "MAIL_TAG": tag.group(1) if tag else (name.group(1) if name else repo),
+        "SITE_URL": f"{SITE}/{repo}/",
     }
     for key, value in values.items():
         starter = re.sub(rf'({key} = )"[^"]*"', rf'\1"{value}"', starter)

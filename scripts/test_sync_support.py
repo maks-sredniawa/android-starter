@@ -4,6 +4,7 @@ import contextlib
 import importlib.util
 import io
 import re
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -63,6 +64,15 @@ class Sync(unittest.TestCase):
         self.assertIn('MAIL_TAG = "Kettle Brew"', config)
         self.assertIn('SITE_URL = "https://maksforge.com/kettle/"', config)
         self.assertIn("package app.kettle.ui.support", config)
+
+    def test_the_site_comes_from_the_remote_not_a_worktrees_directory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            app = make_app(Path(tmp))
+            subprocess.run(["git", "init", "-q", str(app)], check=True)
+            subprocess.run(["git", "-C", str(app), "remote", "add", "origin", "git@github.com:owner/kettle-app.git"], check=True)
+            run(str(app))
+            config = (app / "app/src/main/java/app/kettle/ui/support/SupportConfig.kt").read_text()
+        self.assertIn('SITE_URL = "https://maksforge.com/kettle-app/"', config)
 
     def test_the_module_arrives_in_the_apps_package_and_its_config_is_never_overwritten(self):
         with tempfile.TemporaryDirectory() as tmp:
