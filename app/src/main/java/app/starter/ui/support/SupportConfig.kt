@@ -30,4 +30,7 @@ object SupportConfig {
      * on the Credits screen beside the dependencies.
      */
     val BUNDLED_CREDITS: List<LicensedArtifact> = emptyList()
+
+    /** People who helped with this app, shown on Credits under the creator; none hides the section. */
+    val CONTRIBUTORS: List<Contributor> = emptyList()
 }
