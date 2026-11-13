@@ -105,7 +105,7 @@ fun Context.openPrivacyPolicy(): Boolean = openInBrowser("${SupportConfig.SITE_U
 
 fun Context.openMoreApps(): Boolean = openInBrowser(MORE_APPS_URL)
 
-private fun Context.openInBrowser(url: String): Boolean = startActivitySafely(Intent(Intent.ACTION_VIEW, url.toUri()))
+fun Context.openInBrowser(url: String): Boolean = startActivitySafely(Intent(Intent.ACTION_VIEW, url.toUri()))
 
 val versionNumber: String get() = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
 

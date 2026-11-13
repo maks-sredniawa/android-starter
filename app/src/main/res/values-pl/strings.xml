@@ -103,6 +103,10 @@
     <string name="support_tip_thanks">Dziękuję. To wiele znaczy.</string>
     <string name="support_tip_pending">Płatność jest jeszcze przetwarzana. Google Play ją dokończy.</string>
     <string name="licence_text_missing">Treść tej licencji nie jest dołączona do aplikacji.</string>
+    <string name="licences_intro">Ta aplikacja korzysta z bibliotek wymienionych poniżej. Lista powstaje podczas kompilacji, więc wymienia wszystko, co ta wersja aplikacji naprawdę zawiera.</string>
+    <string name="licences_read">Przeczytaj licencję</string>
+    <string name="licences_open_terms">Otwórz warunki</string>
+    <string name="licences_unavailable">Nie udało się odczytać listy licencji z tej wersji aplikacji.</string>
     <string name="support_no_browser">Na tym telefonie nie ma przeglądarki do otwarcia.</string>
     <string name="support_site">Strona aplikacji</string>
     <string name="support_privacy">Polityka prywatności</string>

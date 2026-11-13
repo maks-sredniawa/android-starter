@@ -56,6 +56,7 @@ data class ItemEditor(
 @Serializable
 data class LicenceText(
     val spdxId: String,
+    val title: String,
 ) : NavKey
 
 /**
