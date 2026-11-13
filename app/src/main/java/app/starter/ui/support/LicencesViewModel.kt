@@ -9,8 +9,11 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -28,6 +31,10 @@ class LicencesViewModel(
 ) : AndroidViewModel(application) {
     private val state = MutableStateFlow(LicencesUiState())
     val uiState: StateFlow<LicencesUiState> = state.asStateFlow()
+
+    // An app that keeps its own LicencesScreen.kt (support-sync.keep) still reads this.
+    val groups: StateFlow<List<LicenceGroup>> =
+        state.map { it.groups }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     init {
         viewModelScope.launch {

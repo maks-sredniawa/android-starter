@@ -196,6 +196,28 @@ class Sync(unittest.TestCase):
         self.assertIn(sync.LICENCE_TEXT_NOTE, old)
         self.assertNotIn(sync.LICENCE_TEXT_NOTE, new)
 
+    def test_keeping_one_licence_screen_still_reports_the_old_navigation_shape(self):
+        old_nav = "data class LicenceText(val spdxId: String) : NavKey\nonOpenLicence = { backStack.add(LicenceText(it)) }\n"
+        with tempfile.TemporaryDirectory() as tmp:
+            app = make_app(Path(tmp))
+            (app / "scripts").mkdir()
+            keep = app / "scripts/support-sync.keep"
+            (app / "app/src/main/java/app/kettle/NavigationKeys.kt").write_text(old_nav)
+            screen = app / "app/src/main/java/app/kettle/ui/support/LicencesScreen.kt"
+            screen.write_text("onOpenLicence(group.spdxId!!)\nviewModel.groups\n")
+            keep.write_text("ui/support/LicencesScreen.kt\n")
+            _, one_kept = run(str(app))
+            keep.write_text("ui/support/LicencesScreen.kt\nui/support/LicenceTextScreen.kt\n")
+            _, both_kept = run(str(app))
+        self.assertIn(sync.LICENCE_TEXT_NOTE, one_kept)
+        self.assertIn(sync.KEPT_LICENCES_NOTE, one_kept)
+        self.assertNotIn(sync.LICENCE_TEXT_NOTE, both_kept)
+        self.assertNotIn(sync.KEPT_LICENCES_NOTE, both_kept)
+
+    def test_a_kept_credits_screen_reading_groups_still_compiles_against_the_synced_view_model(self):
+        model = sync.package_dir(sync.project.ROOT, "main", sync.project.NAMESPACE) / "ui/support/LicencesViewModel.kt"
+        self.assertRegex(model.read_text(), r"val groups: StateFlow<List<LicenceGroup>>")
+
 
 if __name__ == "__main__":
     unittest.main()

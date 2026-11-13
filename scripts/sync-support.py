@@ -158,6 +158,13 @@ def with_new_members(app_config: str) -> tuple[str, list[str], list[str]]:
     return app_config[:end].rstrip("\n") + "\n" + added + "}\n", [m.group(1) for m in neutral], by_hand
 
 
+LICENCES_SCREEN = "ui/support/LicencesScreen.kt"
+LICENCE_TEXT_SCREEN = "ui/support/LicenceTextScreen.kt"
+KEPT_LICENCES_NOTE = (
+    f"the kept {LICENCES_SCREEN} opens a licence by its id alone, but the synced LicenceTextScreen also "
+    "takes its full name — pass `group.title` on as the template's `onOpenLicenceText` does, or keep "
+    f"{LICENCE_TEXT_SCREEN} too"
+)
 LICENCE_TEXT_NOTE = (
     "Navigation: the licence text screen now takes the licence's full name — give NavigationKeys' "
     "LicenceText a `val title: String`, pass LicencesScreen `onOpenLicenceText = { spdxId, title -> "
@@ -191,6 +198,8 @@ def plan(app: Path) -> tuple[dict[Path, str], list[str]]:
                 text = kept.read_text(encoding="utf-8")
                 if "CREATOR" not in text or "CONTRIBUTORS" not in text:
                     notes.append(f"the kept {rel} must show CREATOR and CONTRIBUTORS like the template's Credits screen")
+                if LICENCE_TEXT_SCREEN not in keep and "onOpenLicenceText" not in text:
+                    notes.append(KEPT_LICENCES_NOTE)
             continue
         source = package_dir(project.ROOT, source_set, project.NAMESPACE) / rel
         writes[package_dir(app, source_set, namespace) / rel] = retarget(source.read_text(encoding="utf-8"), namespace)
@@ -230,7 +239,7 @@ def plan(app: Path) -> tuple[dict[Path, str], list[str]]:
     for symbol in ["fun LinkRow(", "enum class LinkTarget", "fun SectionHeader(", "fun DetailScaffold(", "fun Context.startActivitySafely("]:
         if symbol not in source:
             notes.append(f"ui/common/ has no `{symbol}` — copy it from the template before building")
-    if not {"ui/support/LicencesScreen.kt", "ui/support/LicenceTextScreen.kt"} & keep:
+    if not {LICENCES_SCREEN, LICENCE_TEXT_SCREEN} <= keep:
         notes += navigation_notes(app, namespace)
     if not has_tip:
         notes.append("no tip/ package: TipSection and SupportViewModel left out; pass no `tip` to SupportScreen")
