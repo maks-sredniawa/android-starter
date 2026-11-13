@@ -113,6 +113,6 @@
     <string name="support_more_apps_hint">Inne darmowe aplikacje tego samego twórcy.</string>
     <string name="support_version">Wersja %1$s</string>
     <string name="support_version_hint">Dotknij, aby skopiować.</string>
-    <string name="support_version_copied">Skopiowano.</string>
+    <string name="support_copied">Skopiowano.</string>
     <!-- shared:support end -->
 </resources>
