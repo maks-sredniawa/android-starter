@@ -165,7 +165,6 @@ fun licencesOrBundled(
     report: () -> String,
 ): List<LicenceGroup> = runCatching { groupLicences(report(), bundled) }.getOrElse { groupLicences("[]", bundled) }
 
-/** What a licence group's one row opens: the text the app ships, or the terms' own page. */
 sealed interface LicenceLink {
     data class Text(
         val spdxId: String,
@@ -178,8 +177,6 @@ sealed interface LicenceLink {
 }
 
 /**
- * The bundled text when it ships, the terms' page otherwise, and no row when there is neither.
- *
  * [bundledTexts] is read from the assets rather than assumed from the SPDX id, so a licence whose
  * text was never added degrades to its link instead of a screen saying the text is missing.
  */
