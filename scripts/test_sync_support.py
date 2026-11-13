@@ -125,19 +125,20 @@ class Sync(unittest.TestCase):
         self.assertNotIn("support_tip", base)
         self.assertIn('name="support_rate"', base)
 
-    def test_a_member_the_template_gained_is_added_to_an_existing_config(self):
+    def test_a_missing_list_member_is_added_and_a_missing_const_is_only_reported(self):
         with tempfile.TemporaryDirectory() as tmp:
             app = make_app(Path(tmp))
             config = app / "app/src/main/java/app/kettle/ui/support/SupportConfig.kt"
             config.parent.mkdir(parents=True, exist_ok=True)
             config.write_text('package app.kettle.ui.support\n\nobject SupportConfig {\n    const val SUPPORT_ADDRESS = "mine@maksforge.com"\n}\n')
-            run(str(app))
+            _, out = run(str(app))
             text = config.read_text()
             run(str(app))
             again = config.read_text()
         self.assertIn('SUPPORT_ADDRESS = "mine@maksforge.com"', text)
         self.assertIn("val CONTRIBUTORS: List<Contributor> = emptyList()", text)
-        self.assertIn('MAIL_TAG = "Starter"', text)
+        self.assertNotIn("MAIL_TAG", text)
+        self.assertIn("has no MAIL_TAG — set it by hand", out)
         self.assertEqual(text, again)
         self.assertTrue(text.endswith("}\n"))
 
