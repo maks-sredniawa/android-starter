@@ -5,9 +5,9 @@ package app.starter.ui.support
  * `ui/support/` that `scripts/sync-support.py` never overwrites.** Every other file in this package,
  * and the `shared:support` block of each `strings.xml`, comes from android-starter.
  *
- * `bootstrap.py` writes the four constants. Each is compiled into every build and frozen there for as
- * long as a sideloaded copy survives, so the address and the site sit on a domain we own, whose
- * routing can move without a release. The Play listing's contact field carries the same address —
+ * Each constant is compiled into every build and frozen there for as long as a sideloaded copy
+ * survives, so the address and the site sit on a domain we own, whose routing can move without a
+ * release. The Play listing's contact field carries the same address —
  * `docs/DOD.md`, *Before the first upload*.
  */
 object SupportConfig {
@@ -19,7 +19,7 @@ object SupportConfig {
      */
     const val PLAY_PACKAGE = "com.example.starter"
 
-    /** The mail subject's prefix — "Starter #bug" — which a mail filter sorts on. Never translated. */
+    /** The mail subject's prefix — "`<MAIL_TAG> #bug`" — which a mail filter sorts on. Never translated. */
     const val MAIL_TAG = "Starter"
 
     /** The app's page on maksforge.com; the privacy policy is `privacy-policy` beneath it. */
