@@ -3,7 +3,8 @@
 
     python3 scripts/aab-locale.py [locale ...] [path/to/app-release.aab]
 
-With no locale named it checks every language `locales_config.xml` ships.
+With no locale named it checks every language `locales_config.xml` ships. The base strings
+(`values/strings.xml`) are checked on every run.
 
 Why this exists: in the app this template was extracted from, a patch release
 had to fix *Polish not reaching a shipped artifact at all*. `values-pl/strings.xml`
@@ -16,7 +17,7 @@ An AAB keeps every locale's strings in `base/resources.pb`; Play splits them int
 per-language APKs at install time. So the bytes are there to look for, and their
 absence is exactly the failure that patch release had to fix.
 
-Exits non-zero if any translated string is missing from the resource table.
+Exits non-zero if any base or translated string is missing from the resource table.
 """
 
 import re
@@ -79,6 +80,43 @@ def strings_from(path):
     return values
 
 
+def field(value):
+    """A string as the resource table stores it: protobuf field 1, length-delimited.
+
+    `String.value` and `StyledString.value` are both field 1, so each value sits in the table as
+    0x0a, its byte length as a varint, then its UTF-8 bytes. Matching that whole field rather than
+    the bare bytes keeps a value from being found inside a longer one: Polish "Pomoc" is a prefix
+    of "Pomoc i opinie", and a bare-substring match passed with the short one stripped.
+    """
+    data = value.encode()
+    length, varint = len(data), bytearray()
+    while True:
+        byte = length & 0x7F
+        length >>= 7
+        if length:
+            varint.append(byte | 0x80)
+        else:
+            varint.append(byte)
+            return b"\x0a" + bytes(varint) + data
+
+
+def missing_from(table, values):
+    """[(name, value)] for every non-empty value that is not a whole string field of the table."""
+    return [(name, value) for name, value in values.items() if value and field(value) not in table]
+
+
+def report_missing(missing, source, detail=""):
+    print(
+        f"\nMISSING: {len(missing)} string(s) from {source} are not in base/resources.pb{detail}.\n"
+        "Do not upload this artifact.",
+        file=sys.stderr,
+    )
+    for name, value in missing[:15]:
+        print(f"  {name} = {value!r}", file=sys.stderr)
+    if len(missing) > 15:
+        print(f"  … and {len(missing) - 15} more", file=sys.stderr)
+
+
 def qualifier(tag):
     """The `values-` qualifier for a BCP-47 tag: `pl` -> `pl`, `pt-BR` -> `pt-rBR`.
 
@@ -103,40 +141,46 @@ def shipped_locales():
     return [tag for tag in tags if tag and tag != "en"]
 
 
+def check_base(table, default):
+    """The English base strings against the resource table. 0 if every one is in the bundle.
+
+    A string the release shrinker strips is gone from every language at once, so the base is where
+    that loss shows first, and it has no translation to cover for it.
+    """
+    print()
+    missing = missing_from(table, default)
+    checked = len([v for v in default.values() if v])
+    print("locale       base")
+    print(f"checked      {checked} strings from values/strings.xml")
+    if missing:
+        report_missing(missing, "values/strings.xml")
+        return 1
+    print(f"all {checked} base strings are present in base/resources.pb")
+    return 0
+
+
 def check(locale, table, default):
     """One locale against the resource table. 0 if every string of it is in the bundle."""
     print()
-    translated = strings_from(f"{RES}/values-{qualifier(locale)}/strings.xml")
+    source = f"values-{qualifier(locale)}/strings.xml"
+    translated = strings_from(f"{RES}/{source}")
 
     # A string identical to its English counterpart ("OK", a proper name) proves
     # nothing about the translation having shipped — it would be present either
     # way. The ones that *differ* are the load-bearing subset, so they are counted
     # separately and the run fails if there are implausibly few.
-    missing, distinct, distinct_missing = [], 0, 0
-    for name, value in translated.items():
-        if not value:
-            continue
-        differs = default.get(name) != value
-        distinct += differs
-        if value.encode() not in table:
-            missing.append((name, value))
-            distinct_missing += differs
+    present = {name: value for name, value in translated.items() if value}
+    missing = missing_from(table, present)
+    distinct = sum(default.get(name) != value for name, value in present.items())
+    distinct_missing = sum(default.get(name) != value for name, value in missing)
 
-    checked = len([v for v in translated.values() if v])
+    checked = len(present)
     print(f"locale       {locale}")
-    print(f"checked      {checked} strings from values-{qualifier(locale)}/strings.xml")
+    print(f"checked      {checked} strings from {source}")
     print(f"distinct     {distinct} differ from values/strings.xml")
 
     if missing:
-        print(
-            f"\nMISSING: {len(missing)} string(s) are not in base/resources.pb "
-            f"({distinct_missing} of them translated).\nDo not upload this artifact.",
-            file=sys.stderr,
-        )
-        for name, value in missing[:15]:
-            print(f"  {name} = {value!r}", file=sys.stderr)
-        if len(missing) > 15:
-            print(f"  … and {len(missing) - 15} more", file=sys.stderr)
+        report_missing(missing, source, f" ({distinct_missing} of them translated)")
         return 1
 
     if distinct < checked // 2:
@@ -176,12 +220,13 @@ def main():
 
     # Every locale is checked before anything exits, because "which languages made it" is the
     # question, and stopping at the first failure answers it for one.
-    failed = [locale for locale in locales if check(locale, table, default)]
+    failed = ["base"] if check_base(table, default) else []
+    failed += [locale for locale in locales if check(locale, table, default)]
     print()
     if failed:
         print(f"FAILED: {', '.join(failed)} — do not upload this artifact.", file=sys.stderr)
         return 1
-    print(f"all {len(locales)} shipped locales are present in {path}: {', '.join(locales)}")
+    print(f"the base strings and all {len(locales)} shipped locales are present in {path}: {', '.join(locales)}")
     return 0
 
 
