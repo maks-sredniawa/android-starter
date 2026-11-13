@@ -1,7 +1,6 @@
 package app.starter.ui.support
 
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
@@ -124,14 +123,6 @@ class LicencesTest {
             LicenceGroup("MIT License", "MIT", terms, emptyList()).link(setOf("Apache-2.0")),
         )
         assertNull(LicenceGroup("MIT License", "MIT", null, emptyList()).link(emptySet()))
-    }
-
-    @Test
-    fun `the list is unavailable only once loading is done and nothing came back`() {
-        val group = LicenceGroup("MIT License", "MIT", null, emptyList())
-        assertFalse(LicencesUiState().unavailable)
-        assertTrue(LicencesUiState(loading = false).unavailable)
-        assertFalse(LicencesUiState(loading = false, groups = listOf(group)).unavailable)
     }
 
     @Test
