@@ -93,8 +93,6 @@
         <item quantity="other">%d older thumbnails did not fit and were left out.</item>
     </plurals>
 
-    <!-- Licences -->
-
     <!-- Notification channels. The convention `channel_<id>_name` / `channel_<id>_description` is
          asserted by ReminderChannelsTest, so a new channel cannot ship with no name. -->
     <string name="channel_reminders_name">Reminders</string>
@@ -131,7 +129,6 @@
     <string name="support_tip_thanks">Thank you. It means a lot.</string>
     <string name="support_tip_pending">Your payment is still being processed. Google Play will finish it.</string>
     <string name="licence_text_missing">The text of this licence is not bundled with the app.</string>
-    <!-- %1$s is the version, e.g. "1.4.0 (23)". -->
     <string name="support_no_browser">No web browser on this phone to open.</string>
     <string name="support_site">App web page</string>
     <string name="support_privacy">Privacy policy</string>
@@ -140,6 +137,7 @@
     <string name="support_credits_hint">Open-source licences</string>
     <string name="support_more_apps">More MaksForge apps</string>
     <string name="support_more_apps_hint">Other free apps by the same developer.</string>
+    <!-- %1$s is the version, e.g. "1.4.0 (23)". -->
     <string name="support_version">Version %1$s</string>
     <string name="support_version_hint">Tap to copy.</string>
     <string name="support_version_copied">Copied.</string>
