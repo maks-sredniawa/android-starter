@@ -101,8 +101,11 @@ def block_names(block: str) -> list[str]:
 
 
 def synced_strings(app_text: str, block: str) -> str:
-    if BLOCK.search(app_text):
-        return BLOCK.sub(lambda _: block, app_text, count=1)
+    match = BLOCK.search(app_text)
+    if match:
+        # A string the template has just moved into the block must leave the app's own part of the file.
+        names = block_names(block)
+        return strip_strings(app_text[: match.start()], names) + block + strip_strings(app_text[match.end() :], names)
     text = strip_strings(app_text, block_names(block) + RETIRED_STRINGS)
     text = RETIRED_COMMENTS.sub("", text)
     text = re.sub(r"\n{3,}", "\n\n", text).rstrip()
@@ -153,6 +156,22 @@ def with_new_members(app_config: str) -> tuple[str, list[str], list[str]]:
     end = app_config.rstrip().rindex("}")
     added = "".join("\n" + m.group(0) for m in neutral)
     return app_config[:end].rstrip("\n") + "\n" + added + "}\n", [m.group(1) for m in neutral], by_hand
+
+
+LICENCE_TEXT_NOTE = (
+    "Navigation: the licence text screen now takes the licence's full name — give NavigationKeys' "
+    "LicenceText a `val title: String`, pass LicencesScreen `onOpenLicenceText = { spdxId, title -> "
+    "backStack.add(LicenceText(spdxId, title)) }` and LicenceTextScreen `title = key.title`"
+)
+
+
+def navigation_notes(app: Path, namespace: str) -> list[str]:
+    root = package_dir(app, "main", namespace)
+    source = "\n".join(p.read_text(encoding="utf-8") for p in [root / "Navigation.kt", root / "NavigationKeys.kt"] if p.is_file())
+    if "LicenceText" not in source:
+        return []
+    old_shape = "onOpenLicence =" in source or not re.search(r"class LicenceText\([^)]*\bval title\b", source)
+    return [LICENCE_TEXT_NOTE] if old_shape else []
 
 
 def plan(app: Path) -> tuple[dict[Path, str], list[str]]:
@@ -211,6 +230,8 @@ def plan(app: Path) -> tuple[dict[Path, str], list[str]]:
     for symbol in ["fun LinkRow(", "enum class LinkTarget", "fun SectionHeader(", "fun DetailScaffold(", "fun Context.startActivitySafely("]:
         if symbol not in source:
             notes.append(f"ui/common/ has no `{symbol}` — copy it from the template before building")
+    if not {"ui/support/LicencesScreen.kt", "ui/support/LicenceTextScreen.kt"} & keep:
+        notes += navigation_notes(app, namespace)
     if not has_tip:
         notes.append("no tip/ package: TipSection and SupportViewModel left out; pass no `tip` to SupportScreen")
     return writes, notes
@@ -245,6 +266,7 @@ def main() -> int:
             f"\n{app.name}: now wire it up and build —\n"
             "  SettingsScreen: AboutSection(onOpenSupport, onOpenLicences) and LanguageReportRow()\n"
             "  Navigation: SupportScreen(onBack, onOpenCredits = { backStack.add(Licences) }, tip = { TipSection() })\n"
+            "  Navigation: LicencesScreen(onBack, onOpenLicenceText = { spdxId, title -> backStack.add(LicenceText(spdxId, title)) })\n"
             "  ./gradlew spotlessApply test lint && python3 scripts/translation-gate.py origin/main"
         )
     return 1 if args.check and changed else 0

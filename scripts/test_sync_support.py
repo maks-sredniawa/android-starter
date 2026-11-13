@@ -166,5 +166,36 @@ class Sync(unittest.TestCase):
         self.assertNotIn(note, with_people)
 
 
+    def test_a_string_the_block_now_holds_leaves_the_apps_own_part(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            app = make_app(Path(tmp))
+            run(str(app))
+            strings = app / "app/src/main/res/values/strings.xml"
+            text = strings.read_text()
+            strings.write_text(text.replace("<!-- shared:support begin", '<string name="licences_intro">Kettle intro</string>\n    <!-- shared:support begin'))
+            run(str(app))
+            base = strings.read_text()
+        self.assertEqual(len(re.findall(r'name="licences_intro"', base)), 1)
+        self.assertNotIn("Kettle intro", base)
+        self.assertIn('name="kettle_own"', base)
+
+    def test_navigation_still_on_the_old_licence_text_shape_is_reported(self):
+        old_keys = "data class LicenceText(\n    val spdxId: String,\n) : NavKey\n"
+        old_nav = "onOpenLicence = { spdxId -> backStack.add(LicenceText(spdxId)) },\n"
+        new_keys = "data class LicenceText(\n    val spdxId: String,\n    val title: String,\n) : NavKey\n"
+        new_nav = "onOpenLicenceText = { spdxId, title -> backStack.add(LicenceText(spdxId, title)) },\n"
+        with tempfile.TemporaryDirectory() as tmp:
+            app = make_app(Path(tmp))
+            root = app / "app/src/main/java/app/kettle"
+            (root / "NavigationKeys.kt").write_text(old_keys)
+            (root / "Navigation.kt").write_text(old_nav)
+            _, old = run(str(app))
+            (root / "NavigationKeys.kt").write_text(new_keys)
+            (root / "Navigation.kt").write_text(new_nav)
+            _, new = run(str(app))
+        self.assertIn(sync.LICENCE_TEXT_NOTE, old)
+        self.assertNotIn(sync.LICENCE_TEXT_NOTE, new)
+
+
 if __name__ == "__main__":
     unittest.main()
