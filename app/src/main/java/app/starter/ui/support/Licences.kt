@@ -156,10 +156,7 @@ fun groupLicences(
         }.sortedWith(compareBy({ it.spdxId == null }, { it.spdxId ?: it.title }))
 }
 
-/**
- * The screen's one policy for a report it cannot read: show the bundled credits alone rather than
- * nothing, because those are often the notices a licence obliges the app to show.
- */
+/** Stays for an app that keeps its own Credits screen, whose `LicencesViewModel.kt` calls it. */
 fun licencesOrBundled(
     bundled: List<LicensedArtifact>,
     report: () -> String,
@@ -170,6 +167,11 @@ data class Credits(
     val reportUnreadable: Boolean,
 )
 
+/**
+ * The screen's one policy for a report it cannot read: show the bundled credits alone rather than
+ * nothing, because those are often the notices a licence obliges the app to show, and set
+ * [Credits.reportUnreadable] so the screen can say the list is incomplete.
+ */
 fun readCredits(
     bundled: List<LicensedArtifact>,
     report: () -> String,
