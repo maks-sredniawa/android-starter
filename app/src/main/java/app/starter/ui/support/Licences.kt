@@ -155,3 +155,12 @@ fun groupLicences(
             )
         }.sortedWith(compareBy({ it.spdxId == null }, { it.spdxId ?: it.title }))
 }
+
+/**
+ * The screen's one policy for a report it cannot read: show the bundled credits alone rather than
+ * nothing, because those are often the notices a licence obliges the app to show.
+ */
+fun licencesOrBundled(
+    bundled: List<LicensedArtifact>,
+    report: () -> String,
+): List<LicenceGroup> = runCatching { groupLicences(report(), bundled) }.getOrElse { groupLicences("[]", bundled) }

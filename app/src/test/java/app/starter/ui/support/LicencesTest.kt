@@ -85,4 +85,22 @@ class LicencesTest {
         // which is the right place for the decision — one caller, one policy.
         assertThrows(Exception::class.java) { groupLicences("not json") }
     }
+
+    @Test
+    fun `an unreadable report still shows the bundled credits`() {
+        val bundled =
+            listOf(
+                LicensedArtifact(
+                    groupId = "org.openstreetmap",
+                    artifactId = "data",
+                    version = "1",
+                    spdxLicenses = listOf(SpdxLicence("ODbL-1.0", "Open Database License")),
+                ),
+            )
+
+        val groups = licencesOrBundled(bundled) { error("asset missing") }
+
+        assertEquals(listOf("ODbL-1.0"), groups.map { it.spdxId })
+        assertEquals(bundled, groups.single().artifacts)
+    }
 }
