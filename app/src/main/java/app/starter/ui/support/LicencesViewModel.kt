@@ -26,14 +26,13 @@ class LicencesViewModel(
             // kilobytes of JSON.
             _groups.value =
                 withContext(Dispatchers.IO) {
-                    runCatching {
+                    licencesOrBundled(SupportConfig.BUNDLED_CREDITS) {
                         getApplication<Application>()
                             .assets
                             .open(LICENCES_ASSET)
                             .bufferedReader()
                             .use { it.readText() }
-                            .let { groupLicences(it, SupportConfig.BUNDLED_CREDITS) }
-                    }.getOrDefault(emptyList())
+                    }
                 }
         }
     }
