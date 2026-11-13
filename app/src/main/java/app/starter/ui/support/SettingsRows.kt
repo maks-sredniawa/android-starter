@@ -24,8 +24,8 @@ fun AboutSection(
 fun LanguageReportRow() {
     val context = LocalContext.current
     LinkRow(
-        title = stringResource(R.string.settings_language_report),
-        subtitle = stringResource(R.string.settings_language_report_hint),
+        title = stringResource(SupportRequest.Language.titleRes()),
+        subtitle = stringResource(SupportRequest.Language.hintRes()),
         target = LinkTarget.Outside,
         onClick = { context.sendSupportMail(SupportRequest.Language) },
     )

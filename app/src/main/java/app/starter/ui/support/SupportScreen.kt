@@ -168,14 +168,14 @@ private fun Context.copyToClipboard(text: String) {
     getSystemService(ClipboardManager::class.java)?.setPrimaryClip(ClipData.newPlainText(text, text))
 }
 
-private fun SupportRequest.titleRes(): Int =
+internal fun SupportRequest.titleRes(): Int =
     when (this) {
         SupportRequest.Bug -> R.string.support_report
         SupportRequest.Feature -> R.string.support_feature
         SupportRequest.Language -> R.string.settings_language_report
     }
 
-private fun SupportRequest.hintRes(): Int =
+internal fun SupportRequest.hintRes(): Int =
     when (this) {
         SupportRequest.Bug -> R.string.support_report_hint
         SupportRequest.Feature -> R.string.support_feature_hint
