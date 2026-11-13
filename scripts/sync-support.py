@@ -10,7 +10,8 @@ and the `shared:support` block of every `strings.xml` this template translates.
 
 Never touched: `ui/support/SupportConfig.kt`, the app's own values. When an app has none yet it is
 written once from what the app already compiles in: the old `SUPPORT_ADDRESS`/`PLAY_PACKAGE`
-constants, the `support_subject_bug` tag, and the repo's directory name for the site.
+constants, the `support_subject_bug` tag, and for the site the repo name of the `origin` remote, or
+the directory name when the app has no `origin`.
 
 An app keeps its own copy of any synced file by listing its path, relative to the package root or
 to `app/src/main/res/`, in `scripts/support-sync.keep`.
