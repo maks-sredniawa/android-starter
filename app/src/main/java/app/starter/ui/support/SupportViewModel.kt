@@ -26,7 +26,7 @@ data class SupportUiState(
     val outcome: TipOutcome? = null,
 )
 
-/** The tip's half of Support (ADR-0007); every other row on the screen is stateless. */
+/** The tip's half of Support (the tip's ADR, a Play Billing consumable); every other row on the screen is stateless. */
 class SupportViewModel(
     private val tipJar: TipJar,
 ) : ViewModel() {

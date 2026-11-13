@@ -123,6 +123,7 @@ class Sync(unittest.TestCase):
             self.assertFalse((app / "app/src/main/java/app/kettle/tip").exists())
             base = (app / "app/src/main/res/values/strings.xml").read_text()
         self.assertNotIn("support_tip", base)
+        self.assertNotIn("<!-- The tip (", base)
         self.assertIn('name="support_rate"', base)
 
     def test_a_missing_list_member_is_added_and_a_missing_const_is_only_reported(self):

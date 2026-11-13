@@ -39,7 +39,7 @@ enum class TipOutcome {
 }
 
 /**
- * The tip, through Play Billing (ADR-0007).
+ * The tip, through Play Billing (the tip's ADR, a Play Billing consumable).
  *
  * **Every tip is consumed, never just acknowledged**: consuming lets the same product be bought again
  * and also counts as the acknowledgement Play requires within three days. Nothing is unlocked, so

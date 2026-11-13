@@ -37,7 +37,7 @@ CONFIG = "ui/support/SupportConfig.kt"
 TIP_ONLY = {"ui/support/TipSection.kt", "ui/support/SupportViewModel.kt"}
 TIP_FILES = ["tip/TipJar.kt", "tip/TipBilling.kt"]
 TIP_TESTS = ["tip/TipOutcomeTest.kt"]
-TIP_STRINGS = re.compile(r'[ \t]*<!-- The tip \(ADR-0007\).*?-->[ \t]*\n|[ \t]*<string name="support_tip[^"]*".*?</string>[ \t]*\n', re.S)
+TIP_STRINGS = re.compile(r'[ \t]*<!-- The tip \(.*?-->[ \t]*\n|[ \t]*<string name="support_tip[^"]*".*?</string>[ \t]*\n', re.S)
 RETIRED_STRINGS = ["support_subject_bug", "support_subject_feature", "support_subject_language"]
 SITE = "https://maksforge.com"
 
@@ -90,7 +90,7 @@ def strip_strings(text: str, names: list[str]) -> str:
 
 
 RETIRED_COMMENTS = re.compile(
-    r"[ \t]*<!-- (?:Help and feedback\. The three `support_subject_\*`|The tip \(ADR-0007\): a payment).*?-->[ \t]*\n"
+    r"[ \t]*<!-- (?:Help and feedback\. The three `support_subject_\*`|The tip \([^)]*\): a payment).*?-->[ \t]*\n"
     r"|[ \t]*<!-- Licences -->[ \t]*\n(?=\s*(?:<!--|</resources>))",
     re.S,
 )

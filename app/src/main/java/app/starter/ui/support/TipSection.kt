@@ -20,7 +20,7 @@ import app.starter.tip.TipOutcome
 import app.starter.ui.appViewModelExtras
 
 /**
- * Tipping the developer (ADR-0007). The buttons are Play's own prices in the user's currency, so
+ * Tipping the developer (the tip's ADR, a Play Billing consumable). The buttons are Play's own prices in the user's currency, so
  * there is no label to translate on them, and nothing here says what a tip buys, because it buys
  * nothing.
  */
