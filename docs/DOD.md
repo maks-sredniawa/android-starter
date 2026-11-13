@@ -57,7 +57,7 @@ close. Whenever `APP_SCHEMA_VERSION` changes, all five hold before the release g
       and the Play docs. Mail to it arrives through the domain's catch-all; replying from it needs the
       receiving Gmail's *Send mail as* entry, confirmed. Send *Report a problem* from a non-Gmail
       account and check it lands outside Spam. One address everywhere — the listing's contact field
-      and IARC's rating contact too; `SupportHandoff.kt` says why it lives on our own domain.
+      and IARC's rating contact too; `ui/support/SupportConfig.kt` says why it lives on our own domain.
 - [ ] **Write the listing.** `docs/store-listing.md` — every heading in it is parsed by a script.
       The Console's *Review* step then asks for the AI-generated assets declaration: the owner's to make.
 - [ ] **Capture the screenshots** with `scripts/screenshots.py` from a release-shaped build, in every

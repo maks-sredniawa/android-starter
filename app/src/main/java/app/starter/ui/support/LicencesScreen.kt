@@ -62,7 +62,7 @@ fun LicencesScreen(
                     ) {
                         SectionHeader(group.title)
                         Text(
-                            text = group.artifacts.joinToString("\n") { it.coordinates },
+                            text = group.artifacts.joinToString("\n") { it.listing },
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(horizontal = Spacing.base),

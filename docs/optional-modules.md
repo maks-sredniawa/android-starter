@@ -137,8 +137,8 @@ the reminders are gone.
 Every line it adds is deleted outright, along with the imports that leave unused; the two **edits**
 are marked.
 
-- `tip/`, `test/…/tip/`; `ui/support/SupportViewModel.kt` and `TipSection.kt`, and in
-  `SupportScreen.kt` the `TipSection()` call and the KDoc paragraph that names it
+- `tip/`, `test/…/tip/`; `ui/support/SupportViewModel.kt` and `TipSection.kt`, and the `tip`
+  argument the `Support` entry passes in `Navigation.kt`
 - The one-time ask: `ui/items/TipAskCard.kt`; `ItemsScreen`'s `onOpenSupport` parameter and its
   `showTipAsk` item; the `onOpenSupport` the `Items` entry passes in `Navigation.kt`; in
   `ItemsViewModel`, `showTipAsk`, the `preferences`, `tipJar` and `installedAt` parameters and their
@@ -147,7 +147,8 @@ are marked.
   tip lines in `AppPreferencesTest`
 - `AppContainer.tipJar` and `installedAt` (`applicationScope` keeps its `@Suppress("unused")` for
   this day); `settleTipsOnEveryForeground` and its call in `MainApplication`
-- The `items_tip_ask_*` and `support_tip*` strings, in every language
+- The `items_tip_ask_*` and `support_tip*` strings, in every language — `scripts/sync-support.py`
+  leaves the latter out of the shared block for an app with no `tip/`, so later syncs keep them out
 - Gradle: `billing.ktx`, `androidx.lifecycle.process` and licensee's `allowUrl` for Google's terms in
   `app/build.gradle.kts`; the `billing` version and the `billing-ktx` and
   `androidx-lifecycle-process` aliases in `libs.versions.toml`

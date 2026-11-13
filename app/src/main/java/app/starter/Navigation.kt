@@ -30,6 +30,7 @@ import app.starter.ui.settings.SettingsScreen
 import app.starter.ui.support.LicenceTextScreen
 import app.starter.ui.support.LicencesScreen
 import app.starter.ui.support.SupportScreen
+import app.starter.ui.support.TipSection
 
 /**
  * What every back-stack entry is wrapped in — above all, **one `ViewModelStore` per entry**.
@@ -138,7 +139,11 @@ fun MainNavigation(modifier: Modifier = Modifier) {
                         BackupScreen(onBack = { backStack.removeLastOrNull() })
                     }
                     entry<Support> {
-                        SupportScreen(onBack = { backStack.removeLastOrNull() })
+                        SupportScreen(
+                            onBack = { backStack.removeLastOrNull() },
+                            onOpenCredits = { backStack.add(Licences) },
+                            tip = { TipSection() },
+                        )
                     }
                     entry<Licences> {
                         LicencesScreen(

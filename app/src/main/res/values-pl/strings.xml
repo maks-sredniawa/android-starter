@@ -42,8 +42,6 @@
     <string name="settings_material_you_hint">Android 12 i nowsze. Domyślnie wyłączone, aby aplikacja zachowała własną paletę.</string>
     <string name="settings_language">Język</string>
     <string name="settings_language_system">Systemowy</string>
-    <string name="settings_language_report">Coś brzmi nie tak?</string>
-    <string name="settings_language_report_hint">Napisz, jeśli jakieś słowo jest nie tak w twoim języku. Otwiera aplikację pocztową z już wpisanym językiem, w którym czytasz.</string>
     <string name="settings_reminders">Przypomnienia</string>
     <string name="settings_reminders_enabled">Przypominaj mi</string>
     <string name="settings_reminders_hint">Jedno sprawdzenie dziennie. Nic nie jest nigdzie wysyłane.</string>
@@ -57,26 +55,6 @@
     <string name="settings_restore_confirm_title">Przywrócić ustawienia domyślne?</string>
     <string name="settings_restore_confirm_body">Motyw, kolory, przypomnienia i język wrócą do wartości początkowych. Twoje rzeczy i kopie zapasowe zostaną bez zmian. Tego nie można cofnąć.</string>
     <string name="settings_restore_confirm">Przywróć</string>
-    <string name="settings_about">O aplikacji</string>
-    <string name="settings_support">Pomoc i opinie</string>
-    <string name="settings_licences">Licencje open source</string>
-
-    <string name="support_title">Pomoc i opinie</string>
-    <string name="support_report">Zgłoś problem</string>
-    <string name="support_report_hint">Otwiera aplikację pocztową z już wpisanymi informacjami o telefonie, które aplikacja zna.</string>
-    <string name="support_feature">Zaproponuj funkcję</string>
-    <string name="support_feature_hint">Napisz, co aplikacja mogłaby robić i do czego byś tego używał.</string>
-    <string name="support_body_bug">Co się stało i co powinno się stać zamiast tego:</string>
-    <string name="support_body_feature">Co aplikacja mogłaby robić?</string>
-    <string name="support_body_language">Które słowo jest nie tak i na którym ekranie?</string>
-    <string name="support_no_mail_app">Na tym telefonie nie ma aplikacji pocztowej do otwarcia.</string>
-    <string name="support_rate">Oceń tę aplikację w Google Play</string>
-    <string name="support_rate_hint">Otwiera stronę aplikacji w Google Play. Ocena jest dobrowolna i niczego nie odblokowuje.</string>
-    <string name="support_no_play">Na tym telefonie nie ma Google Play ani przeglądarki do otwarcia.</string>
-    <string name="support_tip">Napiwek dla twórcy</string>
-    <string name="support_tip_hint">Jednorazowy napiwek, płatny przez Google Play. Niczego nie odblokowuje, bo w tej aplikacji nic nie jest zablokowane.</string>
-    <string name="support_tip_thanks">Dziękuję. To wiele znaczy.</string>
-    <string name="support_tip_pending">Płatność jeszcze się rozlicza. Google Play ją dokończy.</string>
 
     <string name="backup_explainer">Wszystko zostaje na tym telefonie. Kopia zapasowa to pojedynczy plik, który przechowujesz, gdzie chcesz.</string>
     <string name="backup_export_records">Eksportuj dane</string>
@@ -93,12 +71,47 @@
         <item quantity="other">%d starszej miniatury nie zmieściło się i zostało pominiętych.</item>
     </plurals>
 
-    <string name="licence_text_missing">Treść tej licencji nie jest dołączona do aplikacji.</string>
-
     <string name="channel_reminders_name">Przypomnienia</string>
     <string name="channel_reminders_description">Codzienne sprawdzenie, czy coś jest do zrobienia.</string>
 
     <string name="schema_mismatch_title">Te dane zapisała inna wersja</string>
     <string name="schema_mismatch_body">Dane na tym telefonie zapisano w wersji %1$d, a ta kompilacja odczytuje wersję %2$d.</string>
     <string name="schema_mismatch_copy">Kopia została zachowana jako %1$s. Nic nie zostało usunięte.</string>
+
+    <!-- shared:support begin. Synced into every app by android-starter's scripts/sync-support.py:
+         change it there, never in an app. -->
+    <string name="settings_about">O aplikacji</string>
+    <string name="settings_support">Pomoc i opinie</string>
+    <string name="settings_licences">Licencje open source</string>
+    <string name="settings_language_report">Coś brzmi nie tak?</string>
+    <string name="settings_language_report_hint">Napisz, jeśli jakieś słowo jest nie tak w twoim języku. Otwiera aplikację pocztową z już wpisanym językiem, w którym czytasz.</string>
+    <string name="support_title">Pomoc i opinie</string>
+    <string name="support_report">Zgłoś problem</string>
+    <string name="support_report_hint">Otwiera aplikację pocztową z już wpisanymi informacjami o telefonie, które aplikacja zna.</string>
+    <string name="support_feature">Zaproponuj funkcję</string>
+    <string name="support_feature_hint">Napisz, co aplikacja mogłaby robić i do czego byś tego używał.</string>
+    <string name="support_body_bug">Co się stało i co powinno się stać zamiast tego:</string>
+    <string name="support_body_feature">Co aplikacja mogłaby robić?</string>
+    <string name="support_body_language">Które słowo jest nie tak i na którym ekranie?</string>
+    <string name="support_no_mail_app">Na tym telefonie nie ma aplikacji pocztowej do otwarcia.</string>
+    <string name="support_rate">Oceń tę aplikację w Google Play</string>
+    <string name="support_rate_hint">Otwiera stronę aplikacji w Google Play. Ocena jest dobrowolna i niczego nie odblokowuje.</string>
+    <string name="support_no_play">Na tym telefonie nie ma Google Play ani przeglądarki do otwarcia.</string>
+    <string name="support_tip">Napiwek dla twórcy</string>
+    <string name="support_tip_hint">Jednorazowy napiwek, płatny przez Google Play. Niczego nie odblokowuje, bo w tej aplikacji nic nie jest zablokowane.</string>
+    <string name="support_tip_thanks">Dziękuję. To wiele znaczy.</string>
+    <string name="support_tip_pending">Płatność jeszcze się rozlicza. Google Play ją dokończy.</string>
+    <string name="licence_text_missing">Treść tej licencji nie jest dołączona do aplikacji.</string>
+    <string name="support_no_browser">Na tym telefonie nie ma przeglądarki do otwarcia.</string>
+    <string name="support_site">Strona aplikacji</string>
+    <string name="support_privacy">Polityka prywatności</string>
+    <string name="support_privacy_hint">Otwiera się w przeglądarce.</string>
+    <string name="support_credits">Podziękowania</string>
+    <string name="support_credits_hint">Licencje open source</string>
+    <string name="support_more_apps">Więcej aplikacji MaksForge</string>
+    <string name="support_more_apps_hint">Inne darmowe aplikacje tego samego twórcy.</string>
+    <string name="support_version">Wersja %1$s</string>
+    <string name="support_version_hint">Dotknij, aby skopiować.</string>
+    <string name="support_version_copied">Skopiowano.</string>
+    <!-- shared:support end -->
 </resources>
