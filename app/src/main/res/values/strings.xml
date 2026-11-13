@@ -123,8 +123,9 @@
     <string name="support_rate">Rate this app on Google Play</string>
     <string name="support_rate_hint">Opens this app on Google Play. Rating is optional and unlocks nothing.</string>
     <string name="support_no_play">No Google Play or web browser on this phone to open.</string>
-    <!-- The tip (ADR-0007): a payment to the developer that unlocks nothing. Never "donate" or
-         "support the project". The buttons are Play's own formatted prices, not strings -->
+    <!-- The tip (see the tip's ADR, a Play Billing consumable): a payment to the developer that
+         unlocks nothing. Never "donate" or "support the project". The buttons are Play's own
+         formatted prices, not strings -->
     <string name="support_tip">Tip the developer</string>
     <string name="support_tip_hint">A one-off tip, paid through Google Play. It unlocks nothing, because nothing in this app is locked.</string>
     <string name="support_tip_thanks">Thank you. It means a lot.</string>
