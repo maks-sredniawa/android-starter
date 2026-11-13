@@ -1,6 +1,8 @@
 package app.starter.ui.support
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -102,5 +104,33 @@ class LicencesTest {
 
         assertEquals(listOf("ODbL-1.0"), groups.map { it.spdxId })
         assertEquals(bundled, groups.single().artifacts)
+    }
+
+    @Test
+    fun `an SPDX group reads its bundled text under the licence's full name`() {
+        val group = LicenceGroup("Apache License 2.0", "Apache-2.0", "https://apache.org/licenses", emptyList())
+        assertEquals(LicenceLink.Text("Apache-2.0", "Apache License 2.0"), group.link(setOf("Apache-2.0")))
+    }
+
+    @Test
+    fun `a group with no bundled text opens its terms, and with no URL either it gets no row`() {
+        val terms = "https://developer.android.com/studio/terms.html"
+        assertEquals(
+            LicenceLink.Terms(terms),
+            LicenceGroup("Android SDK terms", null, terms, emptyList()).link(setOf("Apache-2.0")),
+        )
+        assertEquals(
+            LicenceLink.Terms(terms),
+            LicenceGroup("MIT License", "MIT", terms, emptyList()).link(setOf("Apache-2.0")),
+        )
+        assertNull(LicenceGroup("MIT License", "MIT", null, emptyList()).link(emptySet()))
+    }
+
+    @Test
+    fun `the list is unavailable only once loading is done and nothing came back`() {
+        val group = LicenceGroup("MIT License", "MIT", null, emptyList())
+        assertFalse(LicencesUiState().unavailable)
+        assertTrue(LicencesUiState(loading = false).unavailable)
+        assertFalse(LicencesUiState(loading = false, groups = listOf(group)).unavailable)
     }
 }

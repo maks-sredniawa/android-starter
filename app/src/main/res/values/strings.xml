@@ -130,6 +130,10 @@
     <string name="support_tip_thanks">Thank you. It means a lot.</string>
     <string name="support_tip_pending">Your payment is still being processed. Google Play will finish it.</string>
     <string name="licence_text_missing">The text of this licence is not bundled with the app.</string>
+    <string name="licences_intro">This app is built on the libraries below. The list comes from the build itself, so it names everything this copy of the app really contains.</string>
+    <string name="licences_read">Read the licence</string>
+    <string name="licences_open_terms">Open the terms</string>
+    <string name="licences_unavailable">The licence list could not be read from this build.</string>
     <string name="support_no_browser">No web browser on this phone to open.</string>
     <string name="support_site">App web page</string>
     <string name="support_privacy">Privacy policy</string>
