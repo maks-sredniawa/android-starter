@@ -41,6 +41,35 @@ class LicencesTest {
     }
 
     @Test
+    fun `a bundled artifact joins the group of its licence and lists its source under the coordinates`() {
+        val report =
+            """[{"groupId":"a","artifactId":"one","version":"1.0",
+                 "spdxLicenses":[{"identifier":"Apache-2.0","name":"Apache License 2.0"}]}]"""
+        val model =
+            LicensedArtifact(
+                groupId = "models",
+                artifactId = "tiny",
+                version = "3",
+                source = "https://example.org/tiny.bin sha256:abc",
+                spdxLicenses = listOf(SpdxLicence("MIT", "MIT License")),
+            )
+        val dataSet =
+            LicensedArtifact(
+                groupId = "data",
+                artifactId = "set",
+                version = "1",
+                spdxLicenses = listOf(SpdxLicence("Apache-2.0", "Apache License 2.0")),
+            )
+
+        val groups = groupLicences(report, bundled = listOf(model, dataSet)).associateBy { it.spdxId }
+
+        assertEquals(listOf("a:one:1.0", "data:set:1"), groups.getValue("Apache-2.0").artifacts.map { it.coordinates })
+        assertEquals(listOf(model), groups.getValue("MIT").artifacts)
+        assertEquals("models:tiny:3\nhttps://example.org/tiny.bin sha256:abc", model.listing)
+        assertEquals(dataSet.coordinates, dataSet.listing)
+    }
+
+    @Test
     fun `a plugin bump that adds an unknown field must not blank the screen`() {
         val report =
             """[{"groupId":"a","artifactId":"one","version":"1.0","somethingNew":true,
