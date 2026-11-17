@@ -557,8 +557,8 @@ Without it `release-please.yml` fails in about seven seconds with `Input require
 token`, and no release PR is ever opened.
 
 What the script sets, and why each one matters, is in the sections above: **rebase-only merging**
-(*Merge pull requests with rebase*), **the `main` ruleset** — no bypass actors, requiring both CI
-contexts, and note how it interacts with the token, since a release PR opened by `GITHUB_TOKEN`
+(*Merge pull requests with rebase*), **the `main` ruleset** — no bypass actors, requiring every
+check in `REQUIRED_CHECKS`, and note how it interacts with the token, since a release PR opened by `GITHUB_TOKEN`
 gets zero CI jobs and this rule then blocks its merge permanently.
 
 **The site needs no setting.** The maksforge.com deploy (`maks-sredniawa/maks-sredniawa.github.io`)
