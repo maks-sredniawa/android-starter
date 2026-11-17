@@ -36,12 +36,17 @@ CI_WORKFLOW = ROOT / ".github/workflows/ci.yml"
 
 RULESET_NAME = "main: require CI"
 
-# The status checks the ruleset requires, by the `name:` CI gives each job. Both are deliberate
-# choices rather than every job in the file: `Build, unit tests, lint` is the cheap gate, and
-# `Instrumented tests` is the *aggregate* job (`instrumented-gate`), not the matrix legs. The
-# aggregate runs with `always()` so a failed leg still reports — a skipped required check never
-# reports at all, and a PR waiting on one hangs forever.
-REQUIRED_CHECKS = ["Build, unit tests, lint", "Instrumented tests"]
+# The status checks the ruleset requires, by the `name:` CI gives each job. Each is a deliberate
+# choice rather than every job in the file: `Build, unit tests, lint` is the cheap gate,
+# `Release bundle keeps every string` stops a string the shrinker stripped before it reaches a
+# publish run, and `Instrumented tests` is the *aggregate* job (`instrumented-gate`), not the
+# matrix legs. The aggregate runs with `always()` so a failed leg still reports — a skipped
+# required check never reports at all, and a PR waiting on one hangs forever.
+REQUIRED_CHECKS = [
+    "Build, unit tests, lint",
+    "Release bundle keeps every string",
+    "Instrumented tests",
+]
 
 # Secrets, and whether the repo is unusable without them. RELEASE_PLEASE_TOKEN is the only one
 # needed before the first release; the rest are wanted at the first Play upload and not before.
