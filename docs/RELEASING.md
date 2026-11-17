@@ -156,7 +156,7 @@ that was supposed to produce it:
 ./gradlew bundleRelease
 python3 scripts/aab-version.py        # versionCode/versionName vs. git
 python3 scripts/aab-permissions.py    # the <uses-permission> set, vs. an allowlist
-python3 scripts/aab-locale.py         # every string of every shipped locale, vs. the resource table
+python3 scripts/aab-locale.py         # every base string and every shipped locale's, vs. the resource table
 python3 scripts/aab-reflection.py     # the classes only the manifest names, vs. what R8 left in the dex
 keytool -printcert -jarfile app/build/outputs/bundle/release/app-release.aab
 ```
