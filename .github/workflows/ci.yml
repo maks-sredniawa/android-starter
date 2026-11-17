@@ -119,9 +119,9 @@ jobs:
           retention-days: 14
 
   # Resource shrinking strips a string whose only read sits behind a branch R8 proves dead. Lint
-  # cannot see that, the source still references it, so only the shrunk bundle shows the loss, and
-  # before this job that bundle was first built at publish time. The key is generated per run and
-  # signs nothing that leaves the runner; the real upload key never comes near a PR.
+  # cannot see that, the source still references it, so only the shrunk bundle shows the loss. The
+  # key is generated per run and signs nothing that leaves the runner; the real upload key never
+  # comes near a PR.
   release-bundle:
     name: Release bundle keeps every string
     runs-on: ubuntu-latest
