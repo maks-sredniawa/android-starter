@@ -34,12 +34,16 @@ spotless {
     }
 }
 
-// CI runs every check for real: a test, lint or format result is never replayed from the build
-// cache, while compile outputs still are.
+// CI runs every check for real: a test, lint, format or licence result is never replayed from the
+// build cache, while compile outputs still are.
 if (providers.environmentVariable("CI").isPresent) {
     allprojects {
         tasks.configureEach {
-            val isCheck = this is Test || name.startsWith("spotless") || name.contains("lint", ignoreCase = true)
+            val isCheck =
+                this is Test ||
+                    name.startsWith("spotless") ||
+                    name.startsWith("licensee") ||
+                    name.contains("lint", ignoreCase = true)
             if (isCheck) outputs.doNotCacheIf("CI runs every check") { true }
         }
     }
