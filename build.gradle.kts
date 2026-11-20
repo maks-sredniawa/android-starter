@@ -24,11 +24,23 @@ val ktlintRules =
 spotless {
     kotlin {
         target("**/*.kt")
-        targetExclude("**/build/**/*.kt")
+        targetExclude("**/build/**/*.kt", ".worktrees/**")
         ktlint(libs.versions.ktlint.get()).editorConfigOverride(ktlintRules)
     }
     kotlinGradle {
         target("**/*.gradle.kts")
+        targetExclude(".worktrees/**")
         ktlint(libs.versions.ktlint.get()).editorConfigOverride(ktlintRules)
+    }
+}
+
+// CI runs every check for real: a test, lint or format result is never replayed from the build
+// cache, while compile outputs still are.
+if (providers.environmentVariable("CI").isPresent) {
+    allprojects {
+        tasks.configureEach {
+            val isCheck = this is Test || name.startsWith("spotless") || name.contains("lint", ignoreCase = true)
+            if (isCheck) outputs.doNotCacheIf("CI runs every check") { true }
+        }
     }
 }
